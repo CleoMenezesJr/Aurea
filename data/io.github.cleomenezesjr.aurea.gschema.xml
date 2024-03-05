@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="aurea">
+	<schema id="io.github.cleomenezesjr.aurea" path="/io/github/cleomenezesjr/aurea/">
+	</schema>
+</schemalist>

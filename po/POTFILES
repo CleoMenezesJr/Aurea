@@ -1,0 +1,6 @@
+data/io.github.cleomenezesjr.aurea.desktop.in
+data/io.github.cleomenezesjr.aurea.metainfo.xml.in
+data/io.github.cleomenezesjr.aurea.gschema.xml
+src/main.py
+src/window.py
+src/window.ui

@@ -1,0 +1,176 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $AureaWindow : Adw.ApplicationWindow {
+  default-width: 1352;
+  default-height: 592;
+  width-request: 326;
+  height-request: 516;
+
+  Adw.Breakpoint {
+    condition ("max-width: 600sp")
+
+    setters {
+      content_view.halign: fill;
+    }
+  }
+
+
+  content:
+  Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar header_bar {
+      [start]
+      Button open {
+        Adw.ButtonContent {
+          label: _("Open");
+          icon-name: "folder-open-symbolic";
+        }
+        clicked => $open_file_dialog();
+      }
+
+      [title]
+      CenterBox {
+        [center]
+        Adw.WindowTitle window_title {
+          title: _("Banner Preview");
+        }
+      }
+
+      [end]
+      MenuButton {
+        primary: true;
+        icon-name: 'open-menu-symbolic';
+        tooltip-text: _('Menu');
+        menu-model: primary_menu;
+      }
+    }
+    content:
+     Adw.Clamp clamp {
+      maximum-size: 1500;
+      tightening-threshold: 1050;
+      margin-bottom: 24;
+      height-request: 470;
+      halign: fill;
+      valign: center;
+      margin-start: 12;
+      margin-end: 12;
+
+      Box main_card {
+        hexpand: true;
+        vexpand: true;
+
+        Overlay {
+          halign: fill;
+          valign: fill;
+          hexpand: true;
+          vexpand: true;
+
+          Adw.Clamp content_view {
+            maximum-size: 500;
+            tightening-threshold: 600;
+            height-request: 318;
+            halign: start;
+            valign: fill;
+
+            Box {
+              // orientation: vertical;
+                Adw.StatusPage status_page {
+                  hexpand: true;
+                  title: _("Application Name");
+                  description: _("A nice description for an app");
+                  icon-name: "application-x-executable-symbolic";
+                }
+
+            }
+          }
+
+          [overlay]
+          Picture picture {
+            halign: center;
+            valign: center;
+            can-shrink: true;
+            content-fit: scale_down;
+            margin-bottom: 30;
+          }
+
+          [overlay]
+          Button previous_button {
+            use-underline: true;
+            halign: start;
+            valign: center;
+            width-request: 64;
+            height-request: 64;
+            margin-top: 9;
+            margin-bottom: 9;
+            margin-start: 9;
+            margin-end: 9;
+            icon-name: 'go-previous-symbolic';
+
+            accessibility {
+              label: _('Previous');
+            }
+
+            styles [
+              "circular",
+              "flat",
+              "image-button",
+            ]
+          }
+
+          [overlay]
+          Button next_button {
+            use-underline: true;
+            halign: end;
+            valign: center;
+            width-request: 64;
+            height-request: 64;
+            margin-top: 9;
+            margin-bottom: 9;
+            margin-start: 9;
+            margin-end: 9;
+            icon-name: 'go-next-symbolic';
+
+            accessibility {
+              label: _('Next');
+            }
+
+            styles [
+              "circular",
+              "flat",
+              "image-button",
+            ]
+          }
+        }
+
+        styles [
+          "card",
+          "background-card"
+        ]
+      }
+    }
+
+    ;
+  }
+
+  ;
+}
+
+menu primary_menu {
+  section {
+    item {
+      label: _('_Preferences');
+      action: 'app.preferences';
+    }
+
+    item {
+      label: _('_Keyboard Shortcuts');
+      action: 'win.show-help-overlay';
+    }
+
+    item {
+      label: _('_About Aurea');
+      action: 'app.about';
+    }
+  }
+}

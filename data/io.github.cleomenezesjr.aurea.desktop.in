@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=aurea
+Exec=aurea
+Icon=io.github.cleomenezesjr.aurea
+Terminal=false
+Type=Application
+Categories=Game;
+StartupNotify=true
