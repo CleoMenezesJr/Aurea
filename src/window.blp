@@ -74,12 +74,33 @@ template $AureaWindow : Adw.ApplicationWindow {
             valign: fill;
 
             Box {
-              // orientation: vertical;
-                Adw.StatusPage status_page {
-                  hexpand: true;
-                  title: _("Application Name");
-                  description: _("A nice description for an app");
-                  icon-name: "application-x-executable-symbolic";
+              halign: center;
+              valign: center;
+              orientation: vertical;
+
+                Image icon {
+                  icon-size: normal;
+                  halign: center;
+                  valign: end;
+                  pixel-size: 190;
+
+                  styles [
+                    "icon-dropshadow"
+                  ]
+                }
+
+                Label title {
+                  styles [
+                    "title-1"
+                  ]
+                }
+
+                Label description {
+                  margin-top: 8;
+
+                  styles [
+                    "title-4"
+                  ]
                 }
 
             }
