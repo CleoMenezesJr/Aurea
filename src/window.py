@@ -19,29 +19,31 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 SPDX-License-Identifier: GPL-3.0-or-later
 """
 
+import os
 import xml.etree.ElementTree as ET
 
-from gi.repository import Adw, Gdk, Gio, Gtk
+from gi.repository import Adw, GdkPixbuf, Gio, Gtk
 
 
 @Gtk.Template(resource_path="/io/github/cleomenezesjr/aurea/window.ui")
 class AureaWindow(Adw.ApplicationWindow):
     """
 
-    Attributes:
-        __gtype_name__:
-        window_title:
-        main_card:
-        status_page:
-        picture:
+    Attributes: 
+        __gtype_name__: 
+        window_title: 
+        main_card: 
+        icon: 
+        title: 
+        description: 
     """
-
     __gtype_name__ = "AureaWindow"
 
     window_title: Adw.WindowTitle = Gtk.Template.Child()
     main_card: Gtk.Box = Gtk.Template.Child()
-    status_page: Adw.StatusPage = Gtk.Template.Child()
-    picture: Gtk.Picture = Gtk.Template.Child()
+    icon: Gtk.Image = Gtk.Template.Child()
+    title: Gtk.Label = Gtk.Template.Child()
+    description: Gtk.Label = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -95,12 +97,43 @@ class AureaWindow(Adw.ApplicationWindow):
         contents = file.load_contents_finish(result)
 
         if not contents[0]:
-            path = file.peek_path()
             print(f"Unable to open {path}: {contents[1]}")
             return None
 
-        self.window_title.set_subtitle(info.get_name())
+        path = file.peek_path()
+        file_name = info.get_name()
+        self.window_title.set_subtitle(file_name)
+
+        icon_path = self.get_icon_file_path(
+            metadata_path=path, metadata_file_name=file_name
+        )
+        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
+            icon_path,
+            width=-1,
+            height=380,
+            preserve_aspect_ratio=True,
+        )
+        self.icon.set_from_pixbuf(pixbuf)
 
         xml_tree = ET.parse(file.get_path())
-        self.status_page.set_title(xml_tree.find("name").text)
-        self.status_page.set_description(xml_tree.find("summary").text)
+        self.title.set_label(xml_tree.find("name").text)
+        self.description.set_label(xml_tree.find("summary").text)
+
+    def get_icon_file_path(
+        self, metadata_path: str, metadata_file_name: str
+    ) -> str:
+        """
+
+        Args:
+            metadata_path: 
+            metadata_file_name: 
+
+        Returns:
+            
+        """
+        metadata_path: str = metadata_path.replace(metadata_file_name, "")
+        icon_name: str = metadata_file_name.replace("metainfo.xml.in", "svg")
+
+        for root, dirs, files in os.walk(metadata_path):
+            if icon_name in files:
+                return os.path.join(root, icon_name)
