@@ -79,7 +79,9 @@ template $AureaWindow : Adw.ApplicationWindow {
               orientation: vertical;
 
                 Image icon {
+                  icon-name: "application-x-executable-symbolic";
                   icon-size: normal;
+                  margin-bottom: 12;
                   halign: center;
                   valign: end;
                   pixel-size: 190;
@@ -90,19 +92,21 @@ template $AureaWindow : Adw.ApplicationWindow {
                 }
 
                 Label title {
+                  label: _("Application Name");
+
                   styles [
                     "title-1"
                   ]
                 }
 
                 Label description {
-                  margin-top: 8;
+                  margin-top: 12;
+                  label: _("A nice description for an app");
 
                   styles [
                     "title-4"
                   ]
                 }
-
             }
           }
 
