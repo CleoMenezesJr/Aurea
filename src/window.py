@@ -29,14 +29,15 @@ from gi.repository import Adw, GdkPixbuf, Gio, Gtk
 class AureaWindow(Adw.ApplicationWindow):
     """
 
-    Attributes: 
-        __gtype_name__: 
-        window_title: 
-        main_card: 
-        icon: 
-        title: 
-        description: 
+    Attributes:
+        __gtype_name__:
+        window_title:
+        main_card:
+        icon:
+        title:
+        description:
     """
+
     __gtype_name__ = "AureaWindow"
 
     window_title: Adw.WindowTitle = Gtk.Template.Child()
@@ -94,20 +95,19 @@ class AureaWindow(Adw.ApplicationWindow):
             None,
         )
 
-        contents = file.load_contents_finish(result)
+        contents: tuple = file.load_contents_finish(result)
 
         if not contents[0]:
-            print(f"Unable to open {path}: {contents[1]}")
             return None
 
-        path = file.peek_path()
-        file_name = info.get_name()
+        path: str = file.peek_path()
+        file_name: str = info.get_name()
         self.window_title.set_subtitle(file_name)
 
-        icon_path = self.get_icon_file_path(
+        icon_path: str = self.get_icon_file_path(
             metadata_path=path, metadata_file_name=file_name
         )
-        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
+        pixbuf: GdkPixbuf.Pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
             icon_path,
             width=-1,
             height=380,
@@ -115,7 +115,7 @@ class AureaWindow(Adw.ApplicationWindow):
         )
         self.icon.set_from_pixbuf(pixbuf)
 
-        xml_tree = ET.parse(file.get_path())
+        xml_tree: ET = ET.parse(file.get_path())
         self.title.set_label(xml_tree.find("name").text)
         self.description.set_label(xml_tree.find("summary").text)
 
@@ -125,11 +125,11 @@ class AureaWindow(Adw.ApplicationWindow):
         """
 
         Args:
-            metadata_path: 
-            metadata_file_name: 
+            metadata_path:
+            metadata_file_name:
 
         Returns:
-            
+
         """
         metadata_path: str = metadata_path.replace(metadata_file_name, "")
         icon_name: str = metadata_file_name.replace("metainfo.xml.in", "svg")
