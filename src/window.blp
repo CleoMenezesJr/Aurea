@@ -2,16 +2,17 @@ using Gtk 4.0;
 using Adw 1;
 
 template $AureaWindow : Adw.ApplicationWindow {
-  default-width: 1352;
-  default-height: 592;
-  width-request: 326;
-  height-request: 516;
+  default-width: 1450;
+  default-height: 600;
+  width-request: 1450;
+  height-request: 600;
 
   Adw.Breakpoint {
     condition ("max-width: 600sp")
 
     setters {
       content_view.halign: fill;
+      screenshot_box.visible: false;
     }
   }
 
@@ -66,58 +67,84 @@ template $AureaWindow : Adw.ApplicationWindow {
           hexpand: true;
           vexpand: true;
 
-          Adw.Clamp content_view {
-            maximum-size: 500;
-            tightening-threshold: 600;
-            height-request: 318;
-            halign: start;
-            valign: fill;
+          Box {
+            Adw.Clamp content_view {
+              maximum-size: 500;
+              tightening-threshold: 600;
+              height-request: 318;
+              halign: start;
+              valign: fill;
 
-            Box {
-              halign: center;
-              valign: center;
+              Box {
+                halign: center;
+                valign: center;
+                orientation: vertical;
+
+                  Image icon {
+                    icon-name: "application-x-executable-symbolic";
+                    icon-size: normal;
+                    margin-bottom: 12;
+                    halign: center;
+                    valign: end;
+                    pixel-size: 190;
+
+                    styles [
+                      "icon-dropshadow"
+                    ]
+                  }
+
+                  Label title {
+                    label: _("Application Name");
+
+                    styles [
+                      "title-1"
+                    ]
+                  }
+
+                  Label description {
+                    margin-top: 12;
+                    label: _("A nice description for an app");
+
+                    styles [
+                      "title-4"
+                    ]
+                  }
+              }
+            }
+
+            Box screenshot_box{
+              halign: end;
               orientation: vertical;
+              margin-end: 40;
 
-                Image icon {
-                  icon-name: "application-x-executable-symbolic";
-                  icon-size: normal;
-                  margin-bottom: 12;
-                  halign: center;
-                  valign: end;
-                  pixel-size: 190;
-
-                  styles [
-                    "icon-dropshadow"
-                  ]
-                }
-
-                Label title {
-                  label: _("Application Name");
-
-                  styles [
-                    "title-1"
-                  ]
-                }
-
-                Label description {
-                  margin-top: 12;
-                  label: _("A nice description for an app");
-
-                  styles [
-                    "title-4"
-                  ]
-                }
+              Picture screenshot {
+                halign: start;
+                valign: end;
+                vexpand: true;
+                can-shrink: true;
+                // content-fit: scale_down;
+              }
             }
           }
 
-          [overlay]
-          Picture picture {
-            halign: center;
-            valign: center;
-            can-shrink: true;
-            content-fit: scale_down;
-            margin-bottom: 30;
-          }
+
+          // [overlay]
+          // Box {
+          //   halign: end;
+          //
+          //   Picture screenshot {
+          //     halign: start;
+          //     valign: start;
+          //     can-shrink: true;
+          //     content-fit: scale_down;
+          //   }
+          // }
+          // Picture picture {
+          //   halign: center;
+          //   valign: center;
+          //   content-fit: scale_down;
+          //   margin-bottom: 30;
+          // }
 
           [overlay]
           Button previous_button {

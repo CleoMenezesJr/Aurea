@@ -19,10 +19,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 SPDX-License-Identifier: GPL-3.0-or-later
 """
 
+import array
+import io
 import os
 import xml.etree.ElementTree as ET
 
-from gi.repository import Adw, GdkPixbuf, Gio, Gtk
+from gi.repository import Adw, GdkPixbuf, Gio, GLib, Gtk, Soup
+from PIL import Image
 
 
 @Gtk.Template(resource_path="/io/github/cleomenezesjr/aurea/window.ui")
@@ -45,6 +48,7 @@ class AureaWindow(Adw.ApplicationWindow):
     icon: Gtk.Image = Gtk.Template.Child()
     title: Gtk.Label = Gtk.Template.Child()
     description: Gtk.Label = Gtk.Template.Child()
+    screenshot: Gtk.Picture = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -109,7 +113,7 @@ class AureaWindow(Adw.ApplicationWindow):
         )
         pixbuf: GdkPixbuf.Pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
             icon_path,
-            width=-1,
+            width=380,
             height=380,
             preserve_aspect_ratio=True,
         )
@@ -118,6 +122,25 @@ class AureaWindow(Adw.ApplicationWindow):
         xml_tree: ET = ET.parse(file.get_path())
         self.title.set_label(xml_tree.find("name").text)
         self.description.set_label(xml_tree.find("summary").text)
+
+        screenshot_url = (
+            xml_tree.find("screenshots").find("screenshot").find("image").text
+        )
+        image_bytes: bytes = self.fetch_screenshot_image_bytes(screenshot_url)
+        image: Image.Image = self.crop_screenshot_bottom(image_bytes)
+        image_array: = array.array("B", image.tobytes())
+        width, height = image.size
+        texture = GdkPixbuf.Pixbuf.new_from_data(
+            image_array,
+            GdkPixbuf.Colorspace.RGB,
+            True,
+            8,
+            width,
+            height,
+            width * 4,
+        )
+ 
+        self.screenshot.set_pixbuf(texture)
 
     def get_icon_file_path(
         self, metadata_path: str, metadata_file_name: str
@@ -137,3 +160,24 @@ class AureaWindow(Adw.ApplicationWindow):
         for root, dirs, files in os.walk(metadata_path):
             if icon_name in files:
                 return os.path.join(root, icon_name)
+
+    def fetch_screenshot_image_bytes(self, url: str) -> bytes | str:
+        session = Soup.Session()
+        message = Soup.Message(
+            method="GET", uri=GLib.Uri.parse(url, GLib.UriFlags.NONE)
+        )
+
+        bytes: GLib.Bytes = session.send_and_read(message)
+        if message.props.status_code != 200:
+            return (
+                f"{message.props.status_code} - {message.props.reason_phrase}"
+            )
+
+        return bytes.get_data()
+
+    def crop_screenshot_bottom(self, image_bytes: bytes) -> Image.Image:
+        image = Image.open(io.BytesIO(image_bytes))
+        width, height = image.size
+        image = image.crop((0, 0, width, int(height * 0.8)))
+
+        return image
