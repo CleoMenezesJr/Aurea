@@ -155,7 +155,8 @@ class AureaWindow(Adw.ApplicationWindow):
 
         """
         metadata_path: str = metadata_path.replace(metadata_file_name, "")
-        icon_name: str = metadata_file_name.replace("metainfo.xml.in", "svg")
+        metainfo_str_index: str = metadata_file_name.find("metainfo")
+        icon_name: str = metadata_file_name[:metainfo_str_index] + "svg"
 
         for root, dirs, files in os.walk(metadata_path):
             if icon_name in files:
