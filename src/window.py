@@ -128,7 +128,7 @@ class AureaWindow(Adw.ApplicationWindow):
         )
         image_bytes: bytes = self.fetch_screenshot_image_bytes(screenshot_url)
         image: Image.Image = self.crop_screenshot_bottom(image_bytes)
-        image_array: = array.array("B", image.tobytes())
+        image_array = array.array("B", image.tobytes())
         width, height = image.size
         texture = GdkPixbuf.Pixbuf.new_from_data(
             image_array,
