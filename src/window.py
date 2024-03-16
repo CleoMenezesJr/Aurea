@@ -109,7 +109,7 @@ class AureaWindow(Adw.ApplicationWindow):
         self.window_title.set_subtitle(file_name)
 
         icon_path: str = self.get_icon_file_path(
-            metadata_path=path, metadata_file_name=file_name
+            metainfo_path=path, metainfo_file_name=file_name
         )
         pixbuf: GdkPixbuf.Pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
             icon_path,
@@ -143,22 +143,22 @@ class AureaWindow(Adw.ApplicationWindow):
         self.screenshot.set_pixbuf(texture)
 
     def get_icon_file_path(
-        self, metadata_path: str, metadata_file_name: str
+        self, metainfo_path: str, metainfo_file_name: str
     ) -> str:
         """
 
         Args:
-            metadata_path:
-            metadata_file_name:
+            # metainfo_path:
+            metainfo_file_name:
 
         Returns:
 
         """
-        metadata_path: str = metadata_path.replace(metadata_file_name, "")
-        metainfo_str_index: str = metadata_file_name.find("metainfo")
-        icon_name: str = metadata_file_name[:metainfo_str_index] + "svg"
+        metainfo_path: str = metainfo_path.replace(metainfo_file_name, "")
+        metainfo_str_index: str = metainfo_file_name.find("metainfo")
+        icon_name: str = metainfo_file_name[:metainfo_str_index] + "svg"
 
-        for root, dirs, files in os.walk(metadata_path):
+        for root, dirs, files in os.walk(metainfo_path):
             if icon_name in files:
                 return os.path.join(root, icon_name)
 
