@@ -53,6 +53,8 @@ class AureaWindow(Adw.ApplicationWindow):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+        self.style_manager = Adw.StyleManager.get_default()
+
     @Gtk.Template.Callback()
     def open_file_dialog(self, action: Gtk.Button) -> None:
         """
@@ -182,3 +184,12 @@ class AureaWindow(Adw.ApplicationWindow):
         image = image.crop((0, 0, width, int(height * 0.8)))
 
         return image
+
+    @Gtk.Template.Callback()
+    def cycle_color_scheme(self, widget) -> None:
+        is_color_scheme_light = not Adw.StyleManager.get_default().get_dark()
+        self.style_manager.props.color_scheme = (
+            Adw.ColorScheme.FORCE_DARK
+            if is_color_scheme_light
+            else Adw.ColorScheme.FORCE_LIGHT
+        )

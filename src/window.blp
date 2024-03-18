@@ -140,6 +140,7 @@ template $AureaWindow : Adw.ApplicationWindow {
             margin-start: 9;
             margin-end: 9;
             icon-name: 'go-previous-symbolic';
+            clicked => $cycle_color_scheme();
 
             accessibility {
               label: _('Previous');
@@ -164,6 +165,7 @@ template $AureaWindow : Adw.ApplicationWindow {
             margin-start: 9;
             margin-end: 9;
             icon-name: 'go-next-symbolic';
+            clicked => $cycle_color_scheme();
 
             accessibility {
               label: _('Next');
