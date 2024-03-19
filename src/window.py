@@ -69,7 +69,6 @@ class AureaWindow(Adw.ApplicationWindow):
         )
 
         contents: tuple = file.load_contents_finish(result)
-
         if not contents[0]:
             return None
 
@@ -80,13 +79,7 @@ class AureaWindow(Adw.ApplicationWindow):
         icon_path: str = self.get_icon_file_path(
             metainfo_path=path, metainfo_file_name=file_name
         )
-        pixbuf: GdkPixbuf.Pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
-            icon_path,
-            width=380,
-            height=380,
-            preserve_aspect_ratio=True,
-        )
-        self.icon.set_from_pixbuf(pixbuf)
+        self.set_icon(icon_path)
 
         xml_tree: ET = ET.parse(file.get_path())
         self.title.set_label(xml_tree.find("name").text)
@@ -99,8 +92,32 @@ class AureaWindow(Adw.ApplicationWindow):
         screenshot_url = (
             xml_tree.find("screenshots").find("screenshot").find("image").text
         )
+        self.set_screenshot_image(screenshot_url)
+
+    def get_icon_file_path(
+        self, metainfo_path: str, metainfo_file_name: str
+    ) -> str:
+        metainfo_path: str = metainfo_path.replace(metainfo_file_name, "")
+        metainfo_str_index: str = metainfo_file_name.find("metainfo")
+        icon_name: str = metainfo_file_name[:metainfo_str_index] + "svg"
+
+        for root, dirs, files in os.walk(metainfo_path):
+            if icon_name in files:
+                return os.path.join(root, icon_name)
+
+    def set_icon(self, icon_path: str) -> None:
+        pixbuf: GdkPixbuf.Pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
+            icon_path,
+            width=380,
+            height=380,
+            preserve_aspect_ratio=True,
+        )
+        self.icon.set_from_pixbuf(pixbuf)
+
+    def set_screenshot_image(self, screenshot_url: str) -> None:
         image_bytes: bytes = self.fetch_screenshot_image_bytes(screenshot_url)
         image: Image.Image = self.crop_screenshot_bottom(image_bytes)
+
         image_array = array.array("B", image.tobytes())
         width, height = image.size
         texture = GdkPixbuf.Pixbuf.new_from_data(
@@ -114,17 +131,6 @@ class AureaWindow(Adw.ApplicationWindow):
         )
 
         self.screenshot.set_pixbuf(texture)
-
-    def get_icon_file_path(
-        self, metainfo_path: str, metainfo_file_name: str
-    ) -> str:
-        metainfo_path: str = metainfo_path.replace(metainfo_file_name, "")
-        metainfo_str_index: str = metainfo_file_name.find("metainfo")
-        icon_name: str = metainfo_file_name[:metainfo_str_index] + "svg"
-
-        for root, dirs, files in os.walk(metainfo_path):
-            if icon_name in files:
-                return os.path.join(root, icon_name)
 
     def fetch_screenshot_image_bytes(self, url: str) -> bytes | str:
         session = Soup.Session()
