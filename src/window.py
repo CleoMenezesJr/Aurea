@@ -24,23 +24,12 @@ import io
 import os
 import xml.etree.ElementTree as ET
 
-from gi.repository import Adw, GdkPixbuf, Gio, GLib, Gtk, Soup
+from gi.repository import Adw, Gdk, GdkPixbuf, Gio, GLib, Gtk, Soup
 from PIL import Image
 
 
 @Gtk.Template(resource_path="/io/github/cleomenezesjr/aurea/window.ui")
 class AureaWindow(Adw.ApplicationWindow):
-    """
-
-    Attributes:
-        __gtype_name__:
-        window_title:
-        main_card:
-        icon:
-        title:
-        description:
-    """
-
     __gtype_name__ = "AureaWindow"
 
     window_title: Adw.WindowTitle = Gtk.Template.Child()
@@ -53,28 +42,15 @@ class AureaWindow(Adw.ApplicationWindow):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+        self.style_provider = Gtk.CssProvider()
         self.style_manager = Adw.StyleManager.get_default()
 
     @Gtk.Template.Callback()
     def open_file_dialog(self, action: Gtk.Button) -> None:
-        """
-
-        Args:
-            action:
-        """
         dialog = Gtk.FileDialog()
         dialog.open(self, None, self.on_file_opened)
 
     def on_file_opened(self, dialog: Gtk.FileDialog, result: Gio.Task) -> None:
-        """
-
-        Args:
-            dialog:
-            result:
-
-        Returns:
-
-        """
         file = dialog.open_finish(result)
 
         if not file:
@@ -86,15 +62,6 @@ class AureaWindow(Adw.ApplicationWindow):
         open_file(file)
 
     def open_file_complete(self, file, result: Gio.Task) -> None:
-        """
-
-        Args:
-            file ():
-            result:
-
-        Returns:
-
-        """
         info: Gio.Task = file.query_info(
             "standard::name",
             Gio.FileQueryInfoFlags.NONE,
@@ -125,6 +92,10 @@ class AureaWindow(Adw.ApplicationWindow):
         self.title.set_label(xml_tree.find("name").text)
         self.description.set_label(xml_tree.find("summary").text)
 
+        self.branding_colors = self.get_branding_colors(xml_tree)
+        if self.branding_colors:
+            self.set_background_card_color(self.branding_colors)
+
         screenshot_url = (
             xml_tree.find("screenshots").find("screenshot").find("image").text
         )
@@ -141,21 +112,12 @@ class AureaWindow(Adw.ApplicationWindow):
             height,
             width * 4,
         )
- 
+
         self.screenshot.set_pixbuf(texture)
 
     def get_icon_file_path(
         self, metainfo_path: str, metainfo_file_name: str
     ) -> str:
-        """
-
-        Args:
-            # metainfo_path:
-            metainfo_file_name:
-
-        Returns:
-
-        """
         metainfo_path: str = metainfo_path.replace(metainfo_file_name, "")
         metainfo_str_index: str = metainfo_file_name.find("metainfo")
         icon_name: str = metainfo_file_name[:metainfo_str_index] + "svg"
@@ -185,11 +147,42 @@ class AureaWindow(Adw.ApplicationWindow):
 
         return image
 
+    def set_background_card_color(self, colors: dict) -> str:
+        color: str = colors[self.which_color_scheme()]
+        self.style_provider.load_from_string(
+            f".main-card {{ background-color: {color};}}"
+        )
+
+        Gtk.StyleContext.add_provider_for_display(
+            Gdk.Display.get_default(),
+            self.style_provider,
+            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
+        )
+
+    def get_branding_colors(self, xml_tree: ET) -> dict | str:
+        branding = xml_tree.find("./branding")
+        if branding is None:
+            return "No branding colors"
+
+        light_color = branding.find('./color[@scheme_preference="light"]').text
+        dark_color = branding.find('./color[@scheme_preference="dark"]').text
+
+        return {"light": light_color, "dark": dark_color}
+
+    def which_color_scheme(self) -> str:
+        is_color_scheme_dark: bool = Adw.StyleManager.get_default().get_dark()
+        if is_color_scheme_dark:
+            return "dark"
+
+        return "light"
+
     @Gtk.Template.Callback()
     def cycle_color_scheme(self, widget) -> None:
-        is_color_scheme_light = not Adw.StyleManager.get_default().get_dark()
         self.style_manager.props.color_scheme = (
-            Adw.ColorScheme.FORCE_DARK
-            if is_color_scheme_light
-            else Adw.ColorScheme.FORCE_LIGHT
+            Adw.ColorScheme.FORCE_LIGHT
+            if self.which_color_scheme() == "dark"
+            else Adw.ColorScheme.FORCE_DARK
         )
+
+        if self.branding_colors:
+            self.set_background_card_color(self.branding_colors)
