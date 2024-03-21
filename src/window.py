@@ -96,14 +96,17 @@ class AureaWindow(Adw.ApplicationWindow):
         if icon_path:
             self.set_icon(icon_path)
         else:
+            self.icon.props.icon_name = "application-x-executable-symbolic"
             self.toast_overlay.add_toast(Adw.Toast.new("No icon found."))
 
         xml_tree: ET = ET.parse(file.get_path())
         self.title.set_label(xml_tree.find("name").text)
         self.description.set_label(xml_tree.find("summary").text)
 
+        self.main_card.remove_css_class("main-card")
         self.branding_colors = self.get_branding_colors(xml_tree)
         if self.branding_colors:
+            self.main_card.add_css_class("main-card")
             self.set_background_card_color(self.branding_colors)
 
         screenshot_url = (
