@@ -23,6 +23,7 @@ import array
 import io
 import os
 import xml.etree.ElementTree as ET
+from threading import Thread
 
 from gi.repository import Adw, Gdk, GdkPixbuf, Gio, GLib, Gtk, Soup
 from PIL import Image
@@ -81,23 +82,11 @@ class AureaWindow(Adw.ApplicationWindow):
         file_name: str = info.get_name()
         self.window_title.set_subtitle(file_name)
 
-        icon_path: str = self.get_icon_file_path(
-            metainfo_path=path, metainfo_file_name=file_name
+        path: str = os.path.dirname(os.path.dirname(path))
+        self.get_icon_file_path(
+            metainfo_path=path,
+            metainfo_file_name=file_name,
         )
-        if not icon_path:
-            # Workaround: If the icon is not found in the current directory,
-            # attempt to locate it in the parent directory.
-            path: str = os.path.dirname(os.path.dirname(path))
-            icon_path: str = self.get_icon_file_path(
-                metainfo_path=path,
-                metainfo_file_name=file_name,
-            )
-
-        if icon_path:
-            self.set_icon(icon_path)
-        else:
-            self.icon.props.icon_name = "application-x-executable-symbolic"
-            self.toast_overlay.add_toast(Adw.Toast.new("No icon found."))
 
         xml_tree: ET = ET.parse(file.get_path())
         self.title.set_label(xml_tree.find("name").text)
@@ -119,16 +108,30 @@ class AureaWindow(Adw.ApplicationWindow):
 
     def get_icon_file_path(
         self, metainfo_path: str, metainfo_file_name: str
-    ) -> str | None:
+    ) -> None:
         metainfo_path: str = os.path.dirname(metainfo_path)
-        metainfo_str_index: str = metainfo_file_name.find("metainfo")
-        icon_name: str = metainfo_file_name[:metainfo_str_index] + "svg"
+        metainfo_str_index: str = metainfo_file_name.rfind(".xml")
+        icon_name: str = (
+            metainfo_file_name[:metainfo_str_index].rsplit(".", 1)[0] + ".svg"
+        )
 
-        for root, dirs, files in os.walk(metainfo_path):
-            if icon_name in files:
-                return os.path.join(root, icon_name)
+        def navigate_directories(self) -> str | None:
+            icon_path: str | None = None
+            for root, dirs, files in os.walk(metainfo_path):
+                if icon_name in files:
+                    icon_path = os.path.join(root, icon_name)
+                    break
+
+            return self.set_icon(icon_path)
+
+        Thread(target=navigate_directories, args=(self,)).start()
 
     def set_icon(self, icon_path: str) -> None:
+        if not icon_path:
+            self.icon.props.icon_name = "application-x-executable-symbolic"
+            self.toast_overlay.add_toast(Adw.Toast.new("No icon found."))
+            return None
+
         pixbuf: GdkPixbuf.Pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
             icon_path,
             width=380,
