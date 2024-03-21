@@ -32,6 +32,7 @@ from PIL import Image
 class AureaWindow(Adw.ApplicationWindow):
     __gtype_name__ = "AureaWindow"
 
+    toast_overlay: Adw.ToastOverlay = Gtk.Template.Child()
     stack: Gtk.Stack = Gtk.Template.Child()
     window_title: Adw.WindowTitle = Gtk.Template.Child()
     main_card: Gtk.Box = Gtk.Template.Child()
@@ -95,7 +96,7 @@ class AureaWindow(Adw.ApplicationWindow):
         if icon_path:
             self.set_icon(icon_path)
         else:
-            print("No icon found")
+            self.toast_overlay.add_toast(Adw.Toast.new("No icon found."))
 
         xml_tree: ET = ET.parse(file.get_path())
         self.title.set_label(xml_tree.find("name").text)
@@ -161,6 +162,9 @@ class AureaWindow(Adw.ApplicationWindow):
         def on_receive_bytes(session, result, message):
             bytes = session.send_and_read_finish(result)
             if message.get_status() != Soup.Status.OK:
+                self.toast_overlay.add_toast(
+                    Adw.Toast.new("Can't load screenshot.")
+                )
                 return f"{message.props.status_code} - {message.props.reason_phrase}"
 
             return self.set_screenshot_image(bytes.get_data(), url)
@@ -191,7 +195,7 @@ class AureaWindow(Adw.ApplicationWindow):
     def get_branding_colors(self, xml_tree: ET) -> dict | str:
         branding = xml_tree.find("./branding")
         if branding is None:
-            print("No branding colors")
+            self.toast_overlay.add_toast(Adw.Toast.new("No branding colors."))
             return None
 
         light_color = branding.find('./color[@scheme_preference="light"]').text
