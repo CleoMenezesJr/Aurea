@@ -62,18 +62,6 @@ template $AureaWindow : Adw.ApplicationWindow {
       }
 
       StackPage {
-        name: "loading_page";
-        child: Spinner spinner {
-          spinning: true;
-          halign: center;
-          width-request: 64;
-          height-request: 64;
-        }
-
-        ;
-      }
-
-      StackPage {
         name: "content_page";
         child: Adw.Clamp clamp {
           maximum-size: 1500;

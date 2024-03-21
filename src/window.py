@@ -54,12 +54,9 @@ class AureaWindow(Adw.ApplicationWindow):
     def on_file_opened(
         self, dialog: Gtk.FileDialog, result: Gio.Task
     ) -> None | GLib.GError:
-        previous_stack_page: str = self.stack.props.visible_child_name
         try:
             file = dialog.open_finish(result)
-            self.stack.props.visible_child_name = "loading_page"
         except Exception as error:
-            self.stack.props.visible_child_name = previous_stack_page
             return error
 
         def open_file(file) -> Gio.File:
@@ -112,7 +109,9 @@ class AureaWindow(Adw.ApplicationWindow):
             xml_tree.find("screenshots").find("screenshot").find("image").text
         )
         self.fetch_screenshot_image_bytes(screenshot_url)
-        self.stack.props.visible_child_name = "content_page"
+
+        if self.stack.props.visible_child_name == "welcome_page":
+            self.stack.props.visible_child_name = "content_page"
 
     def get_icon_file_path(
         self, metainfo_path: str, metainfo_file_name: str
