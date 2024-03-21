@@ -51,8 +51,9 @@ class AureaWindow(Adw.ApplicationWindow):
         dialog = Gtk.FileDialog()
         dialog.open(self, None, self.on_file_opened)
 
-
-    def on_file_opened(self, dialog: Gtk.FileDialog, result: Gio.Task) -> None | GLib.GError:
+    def on_file_opened(
+        self, dialog: Gtk.FileDialog, result: Gio.Task
+    ) -> None | GLib.GError:
         self.stack.props.visible_child_name = "loading_page"
         try:
             file = dialog.open_finish(result)
@@ -102,8 +103,8 @@ class AureaWindow(Adw.ApplicationWindow):
 
     def get_icon_file_path(
         self, metainfo_path: str, metainfo_file_name: str
-    ) -> str:
-        metainfo_path: str = metainfo_path.replace(metainfo_file_name, "")
+    ) -> str | None:
+        metainfo_path: str = os.path.dirname(metainfo_path)
         metainfo_str_index: str = metainfo_file_name.find("metainfo")
         icon_name: str = metainfo_file_name[:metainfo_str_index] + "svg"
 
