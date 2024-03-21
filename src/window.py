@@ -132,7 +132,7 @@ class AureaWindow(Adw.ApplicationWindow):
             height=380,
             preserve_aspect_ratio=True,
         )
-        self.icon.set_from_pixbuf(pixbuf)
+        GLib.idle_add(self.icon.set_from_pixbuf, pixbuf)
 
     def set_screenshot_image(
         self, image_bytes: bytes, screenshot_url: str
@@ -151,7 +151,7 @@ class AureaWindow(Adw.ApplicationWindow):
             width * 4,
         )
 
-        self.screenshot.set_pixbuf(texture)
+        GLib.idle_add(self.screenshot.set_pixbuf, texture)
 
     def fetch_screenshot_image_bytes(self, url: str) -> bytes | str:
         session = Soup.Session()
