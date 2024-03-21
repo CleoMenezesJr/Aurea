@@ -54,12 +54,13 @@ class AureaWindow(Adw.ApplicationWindow):
     def on_file_opened(
         self, dialog: Gtk.FileDialog, result: Gio.Task
     ) -> None | GLib.GError:
-        self.stack.props.visible_child_name = "loading_page"
+        previous_stack_page: str = self.stack.props.visible_child_name
         try:
             file = dialog.open_finish(result)
+            self.stack.props.visible_child_name = "loading_page"
         except Exception as error:
-            self.stack.props.visible_child_name = "welcome_page"
-            return error
+            self.stack.props.visible_child_name = previous_stack_page
+            print(error            return error
 
         def open_file(file) -> Gio.File:
             return file.load_contents_async(None, self.open_file_complete)
