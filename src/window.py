@@ -85,7 +85,19 @@ class AureaWindow(Adw.ApplicationWindow):
         icon_path: str = self.get_icon_file_path(
             metainfo_path=path, metainfo_file_name=file_name
         )
-        self.set_icon(icon_path)
+        if not icon_path:
+            # Workaround: If the icon is not found in the current directory, 
+            # attempt to locate it in the parent directory.
+            path: str = os.path.dirname(os.path.dirname(path))
+            icon_path: str = self.get_icon_file_path(
+                metainfo_path=path,
+                metainfo_file_name=file_name,
+            )
+
+        if icon_path:
+            self.set_icon(icon_path)
+        else:
+            print("No icon found")
 
         xml_tree: ET = ET.parse(file.get_path())
         self.title.set_label(xml_tree.find("name").text)
@@ -175,7 +187,8 @@ class AureaWindow(Adw.ApplicationWindow):
     def get_branding_colors(self, xml_tree: ET) -> dict | str:
         branding = xml_tree.find("./branding")
         if branding is None:
-            return "No branding colors"
+            print("No branding colors")
+            return None
 
         light_color = branding.find('./color[@scheme_preference="light"]').text
         dark_color = branding.find('./color[@scheme_preference="dark"]').text
