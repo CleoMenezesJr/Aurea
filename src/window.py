@@ -32,6 +32,7 @@ from PIL import Image
 class AureaWindow(Adw.ApplicationWindow):
     __gtype_name__ = "AureaWindow"
 
+    stack: Gtk.Stack = Gtk.Template.Child()
     window_title: Adw.WindowTitle = Gtk.Template.Child()
     main_card: Gtk.Box = Gtk.Template.Child()
     icon: Gtk.Image = Gtk.Template.Child()
@@ -50,16 +51,19 @@ class AureaWindow(Adw.ApplicationWindow):
         dialog = Gtk.FileDialog()
         dialog.open(self, None, self.on_file_opened)
 
-    def on_file_opened(self, dialog: Gtk.FileDialog, result: Gio.Task) -> None:
-        file = dialog.open_finish(result)
 
-        if not file:
-            return None
+    def on_file_opened(self, dialog: Gtk.FileDialog, result: Gio.Task) -> None | GLib.GError:
+        self.stack.props.visible_child_name = "loading_page"
+        try:
+            file = dialog.open_finish(result)
+        except Exception as error:
+            self.stack.props.visible_child_name = "welcome_page"
+            return error
 
         def open_file(file) -> Gio.File:
             return file.load_contents_async(None, self.open_file_complete)
 
-        open_file(file)
+        return open_file(file)
 
     def open_file_complete(self, file, result: Gio.Task) -> None:
         info: Gio.Task = file.query_info(
@@ -70,6 +74,7 @@ class AureaWindow(Adw.ApplicationWindow):
 
         contents: tuple = file.load_contents_finish(result)
         if not contents[0]:
+            self.stack.props.visible_child_name = "welcome_page"
             return None
 
         path: str = file.peek_path()
@@ -93,6 +98,7 @@ class AureaWindow(Adw.ApplicationWindow):
             xml_tree.find("screenshots").find("screenshot").find("image").text
         )
         self.set_screenshot_image(screenshot_url)
+        self.stack.props.visible_child_name = "content_page"
 
     def get_icon_file_path(
         self, metainfo_path: str, metainfo_file_name: str

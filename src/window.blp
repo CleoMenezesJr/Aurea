@@ -47,143 +47,174 @@ template $AureaWindow : Adw.ApplicationWindow {
       }
     }
     content:
-     Adw.Clamp clamp {
-      maximum-size: 1500;
-      tightening-threshold: 1050;
-      margin-bottom: 24;
-      height-request: 470;
-      halign: fill;
-      valign: center;
-      margin-start: 12;
-      margin-end: 12;
+    Stack stack {
+      transition-type: crossfade;
 
-      Box main_card {
-        hexpand: true;
-        vexpand: true;
-
-        Overlay {
-          halign: fill;
-          valign: fill;
-          hexpand: true;
-          vexpand: true;
-
-          Box {
-            Adw.Clamp content_view {
-              maximum-size: 500;
-              tightening-threshold: 600;
-              height-request: 318;
-              halign: start;
-              valign: fill;
-
-              Box {
-                halign: center;
-                valign: center;
-                orientation: vertical;
-
-                  Image icon {
-                    icon-name: "application-x-executable-symbolic";
-                    icon-size: normal;
-                    margin-bottom: 12;
-                    halign: center;
-                    valign: end;
-                    pixel-size: 190;
-
-                    styles [
-                      "icon-dropshadow"
-                    ]
-                  }
-
-                  Label title {
-                    label: _("Application Name");
-
-                    styles [
-                      "title-1"
-                    ]
-                  }
-
-                  Label description {
-                    margin-top: 12;
-                    label: _("A nice description for an app");
-
-                    styles [
-                      "title-4"
-                    ]
-                  }
-              }
-            }
-
-            Box screenshot_box{
-              halign: end;
-              orientation: vertical;
-              margin-end: 40;
-
-              Picture screenshot {
-                halign: start;
-                valign: end;
-                vexpand: true;
-                can-shrink: true;
-                // content-fit: scale_down;
-              }
-            }
-          }
-
-
-          [overlay]
-          Button previous_button {
-            use-underline: true;
-            halign: start;
-            valign: center;
-            width-request: 64;
-            height-request: 64;
-            margin-top: 9;
-            margin-bottom: 9;
-            margin-start: 9;
-            margin-end: 9;
-            icon-name: 'go-previous-symbolic';
-            clicked => $cycle_color_scheme();
-
-            accessibility {
-              label: _('Previous');
-            }
-
-            styles [
-              "circular",
-              "flat",
-              "image-button",
-            ]
-          }
-
-          [overlay]
-          Button next_button {
-            use-underline: true;
-            halign: end;
-            valign: center;
-            width-request: 64;
-            height-request: 64;
-            margin-top: 9;
-            margin-bottom: 9;
-            margin-start: 9;
-            margin-end: 9;
-            icon-name: 'go-next-symbolic';
-            clicked => $cycle_color_scheme();
-
-            accessibility {
-              label: _('Next');
-            }
-
-            styles [
-              "circular",
-              "flat",
-              "image-button",
-            ]
-          }
+      StackPage {
+        name: "welcome_page";
+        child: Adw.StatusPage status_page {
+          title: _("Preview Metainfo File");
+          description: _("Select a metainfo file to preview.");
+          icon-name: "folder-documents-symbolic";
         }
 
-        styles [
-          "card",
-          "background-card",
-          "main-card",
-        ]
+        ;
+      }
+
+      StackPage {
+        name: "loading_page";
+        child: Spinner spinner {
+          spinning: true;
+          halign: center;
+          width-request: 64;
+          height-request: 64;
+        }
+
+        ;
+      }
+
+      StackPage {
+        name: "content_page";
+        child: Adw.Clamp clamp {
+          maximum-size: 1500;
+          tightening-threshold: 1050;
+          margin-bottom: 24;
+          height-request: 470;
+          halign: fill;
+          valign: center;
+          margin-start: 12;
+          margin-end: 12;
+
+          Box main_card {
+            hexpand: true;
+            vexpand: true;
+
+            Overlay {
+              halign: fill;
+              valign: fill;
+              hexpand: true;
+              vexpand: true;
+
+              Box {
+                Adw.Clamp content_view {
+                  maximum-size: 500;
+                  tightening-threshold: 600;
+                  height-request: 318;
+                  halign: start;
+                  valign: fill;
+
+                  Box {
+                    halign: center;
+                    valign: center;
+                    orientation: vertical;
+
+                      Image icon {
+                        icon-name: "application-x-executable-symbolic";
+                        icon-size: normal;
+                        margin-bottom: 12;
+                        halign: center;
+                        valign: end;
+                        pixel-size: 190;
+
+                        styles [
+                          "icon-dropshadow"
+                        ]
+                      }
+
+                      Label title {
+                        label: _("Application Name");
+
+                        styles [
+                          "title-1"
+                        ]
+                      }
+
+                      Label description {
+                        margin-top: 12;
+                        label: _("A nice description for an app");
+
+                        styles [
+                          "title-4"
+                        ]
+                      }
+                  }
+                }
+
+                Box screenshot_box{
+                  halign: end;
+                  orientation: vertical;
+                  margin-end: 40;
+
+                  Picture screenshot {
+                    halign: start;
+                    valign: end;
+                    vexpand: true;
+                    can-shrink: true;
+                    // content-fit: scale_down;
+                  }
+                }
+              }
+
+
+              [overlay]
+              Button previous_button {
+                use-underline: true;
+                halign: start;
+                valign: center;
+                width-request: 64;
+                height-request: 64;
+                margin-top: 9;
+                margin-bottom: 9;
+                margin-start: 9;
+                margin-end: 9;
+                icon-name: 'go-previous-symbolic';
+                clicked => $cycle_color_scheme();
+
+                accessibility {
+                  label: _('Previous');
+                }
+
+                styles [
+                  "circular",
+                  "flat",
+                  "image-button",
+                ]
+              }
+
+              [overlay]
+              Button next_button {
+                use-underline: true;
+                halign: end;
+                valign: center;
+                width-request: 64;
+                height-request: 64;
+                margin-top: 9;
+                margin-bottom: 9;
+                margin-start: 9;
+                margin-end: 9;
+                icon-name: 'go-next-symbolic';
+                clicked => $cycle_color_scheme();
+
+                accessibility {
+                  label: _('Next');
+                }
+
+                styles [
+                  "circular",
+                  "flat",
+                  "image-button",
+                ]
+              }
+            }
+
+            styles [
+              "card",
+              "background-card",
+              "main-card",
+            ]
+          }
+         }
+        ;
       }
     }
 
