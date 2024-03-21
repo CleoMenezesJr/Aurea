@@ -60,7 +60,7 @@ class AureaWindow(Adw.ApplicationWindow):
             self.stack.props.visible_child_name = "loading_page"
         except Exception as error:
             self.stack.props.visible_child_name = previous_stack_page
-            print(error            return error
+            return error
 
         def open_file(file) -> Gio.File:
             return file.load_contents_async(None, self.open_file_complete)
@@ -87,7 +87,7 @@ class AureaWindow(Adw.ApplicationWindow):
             metainfo_path=path, metainfo_file_name=file_name
         )
         if not icon_path:
-            # Workaround: If the icon is not found in the current directory, 
+            # Workaround: If the icon is not found in the current directory,
             # attempt to locate it in the parent directory.
             path: str = os.path.dirname(os.path.dirname(path))
             icon_path: str = self.get_icon_file_path(
@@ -111,7 +111,7 @@ class AureaWindow(Adw.ApplicationWindow):
         screenshot_url = (
             xml_tree.find("screenshots").find("screenshot").find("image").text
         )
-        self.set_screenshot_image(screenshot_url)
+        self.fetch_screenshot_image_bytes(screenshot_url)
         self.stack.props.visible_child_name = "content_page"
 
     def get_icon_file_path(
@@ -134,8 +134,9 @@ class AureaWindow(Adw.ApplicationWindow):
         )
         self.icon.set_from_pixbuf(pixbuf)
 
-    def set_screenshot_image(self, screenshot_url: str) -> None:
-        image_bytes: bytes = self.fetch_screenshot_image_bytes(screenshot_url)
+    def set_screenshot_image(
+        self, image_bytes: bytes, screenshot_url: str
+    ) -> None:
         image: Image.Image = self.crop_screenshot_bottom(image_bytes)
 
         image_array = array.array("B", image.tobytes())
@@ -158,13 +159,16 @@ class AureaWindow(Adw.ApplicationWindow):
             method="GET", uri=GLib.Uri.parse(url, GLib.UriFlags.NONE)
         )
 
-        bytes: GLib.Bytes = session.send_and_read(message)
-        if message.props.status_code != 200:
-            return (
-                f"{message.props.status_code} - {message.props.reason_phrase}"
-            )
+        def on_receive_bytes(session, result, message):
+            bytes = session.send_and_read_finish(result)
+            if message.get_status() != Soup.Status.OK:
+                return f"{message.props.status_code} - {message.props.reason_phrase}"
 
-        return bytes.get_data()
+            return self.set_screenshot_image(bytes.get_data(), url)
+
+        session.send_and_read_async(
+            message, GLib.PRIORITY_DEFAULT, None, on_receive_bytes, message
+        )
 
     def crop_screenshot_bottom(self, image_bytes: bytes) -> Image.Image:
         image = Image.open(io.BytesIO(image_bytes))
