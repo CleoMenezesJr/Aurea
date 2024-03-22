@@ -50,7 +50,9 @@ class AureaWindow(Adw.ApplicationWindow):
 
     @Gtk.Template.Callback()
     def open_file_dialog(self, action: Gtk.Button) -> None:
-        dialog = Gtk.FileDialog()
+        filter: Gtk.FileFilter = Gtk.FileFilter()
+        filter.add_mime_type('application/xml')
+        dialog = Gtk.FileDialog(default_filter=filter)
         dialog.open(self, None, self.on_file_opened)
 
     def on_file_opened(
