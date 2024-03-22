@@ -82,7 +82,6 @@ class AureaWindow(Adw.ApplicationWindow):
         file_name: str = info.get_name()
         self.window_title.set_subtitle(file_name)
 
-        path: str = os.path.dirname(os.path.dirname(path))
         self.get_icon_file_path(
             metainfo_path=path,
             metainfo_file_name=file_name,
@@ -107,7 +106,10 @@ class AureaWindow(Adw.ApplicationWindow):
             self.stack.props.visible_child_name = "content_page"
 
     def get_icon_file_path(
-        self, metainfo_path: str, metainfo_file_name: str
+        self,
+        metainfo_path: str,
+        metainfo_file_name: str,
+        try_again: bool = True,
     ) -> None:
         metainfo_path: str = os.path.dirname(metainfo_path)
         metainfo_str_index: str = metainfo_file_name.rfind(".xml")
@@ -115,16 +117,32 @@ class AureaWindow(Adw.ApplicationWindow):
             metainfo_file_name[:metainfo_str_index].rsplit(".", 1)[0] + ".svg"
         )
 
-        def navigate_directories(self) -> str | None:
+        def navigate_directories(
+            self, metainfo_file_name, metainfo_path
+        ) -> str | None:
             icon_path: str | None = None
             for root, dirs, files in os.walk(metainfo_path):
                 if icon_name in files:
                     icon_path = os.path.join(root, icon_name)
                     break
 
+            # Workaround: If the icon is not found in the current directory,
+            # attempt to locate it in the parent directory.
+            if not icon_path:
+                metainfo_path: str = os.path.dirname(
+                    os.path.dirname(metainfo_path)
+                )
+                self.get_icon_file_path(
+                    metainfo_path, metainfo_file_name, False
+                )
+
             return self.set_icon(icon_path)
 
-        Thread(target=navigate_directories, args=(self,)).start()
+        Thread(
+            target=navigate_directories,
+            args=(self, metainfo_file_name, metainfo_path),
+        ).start()
+        return None
 
     def set_icon(self, icon_path: str) -> None:
         if not icon_path:
