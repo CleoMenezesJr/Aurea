@@ -88,8 +88,11 @@ class AureaWindow(Adw.ApplicationWindow):
         )
 
         xml_tree: ET = ET.parse(file.get_path())
-        self.title.set_label(xml_tree.find("name").text)
-        self.description.set_label(xml_tree.find("summary").text)
+
+        name: str = xml_tree.find("name").text
+        self.title.set_label(name or "No Name")
+        summary:str = xml_tree.find("summary").text
+        self.description.set_label(summary or "No summary")
 
         self.main_card.remove_css_class("main-card")
         self.branding_colors = self.get_branding_colors(xml_tree)
@@ -100,7 +103,8 @@ class AureaWindow(Adw.ApplicationWindow):
         screenshot_url = (
             xml_tree.find("screenshots").find("screenshot").find("image").text
         )
-        self.fetch_screenshot_image_bytes(screenshot_url)
+        if screenshot_url:
+            self.fetch_screenshot_image_bytes(screenshot_url.strip())
 
         if self.stack.props.visible_child_name == "welcome_page":
             self.stack.props.visible_child_name = "content_page"
@@ -129,12 +133,14 @@ class AureaWindow(Adw.ApplicationWindow):
             # Workaround: If the icon is not found in the current directory,
             # attempt to locate it in the parent directory.
             if not icon_path:
+                self.icon.props.icon_name = "application-x-executable-symbolic"
                 metainfo_path: str = os.path.dirname(
                     os.path.dirname(metainfo_path)
                 )
                 self.get_icon_file_path(
                     metainfo_path, metainfo_file_name, False
                 )
+                return None
 
             return self.set_icon(icon_path)
 
@@ -158,9 +164,11 @@ class AureaWindow(Adw.ApplicationWindow):
         )
         GLib.idle_add(self.icon.set_from_pixbuf, pixbuf)
 
-    def set_screenshot_image(
-        self, image_bytes: bytes, screenshot_url: str
-    ) -> None:
+    def set_screenshot_image(self, image_bytes: bytes) -> None:
+        self.screenshot.props.visible = bool(image_bytes)
+        if not image_bytes:
+            return None
+
         image: Image.Image = self.crop_screenshot_bottom(image_bytes)
 
         image_array = array.array("B", image.tobytes())
@@ -176,6 +184,7 @@ class AureaWindow(Adw.ApplicationWindow):
         )
 
         GLib.idle_add(self.screenshot.set_pixbuf, texture)
+        return None
 
     def fetch_screenshot_image_bytes(self, url: str) -> bytes | str:
         session = Soup.Session()
@@ -191,7 +200,7 @@ class AureaWindow(Adw.ApplicationWindow):
                 )
                 return f"{message.props.status_code} - {message.props.reason_phrase}"
 
-            return self.set_screenshot_image(bytes.get_data(), url)
+            return self.set_screenshot_image(bytes.get_data())
 
         session.send_and_read_async(
             message, GLib.PRIORITY_DEFAULT, None, on_receive_bytes, message
