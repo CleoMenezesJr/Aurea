@@ -102,11 +102,13 @@ class AureaWindow(Adw.ApplicationWindow):
             self.main_card.add_css_class("main-card")
             self.set_background_card_color(self.branding_colors)
 
-        screenshot_url = (
-            xml_tree.find("screenshots").find("screenshot").find("image").text
-        )
-        if screenshot_url:
-            self.fetch_screenshot_image_bytes(screenshot_url.strip())
+        screenshots_tag: ET.Element = xml_tree.find("screenshots")
+        self.screenshot.props.visible = bool(screenshots_tag)
+        if not screenshots_tag:
+            self.toast_overlay.add_toast(Adw.Toast.new("No screenshot."))
+        else:
+            screenshot_url = screenshots_tag.find("screenshot").find("image")
+            self.fetch_screenshot_image_bytes(screenshot_url.text.strip())
 
         if self.stack.props.visible_child_name == "welcome_page":
             self.stack.props.visible_child_name = "content_page"
