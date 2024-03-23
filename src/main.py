@@ -56,7 +56,7 @@ class AureaApplication(Adw.Application):
         """Callback for the app.about action."""
         about = Adw.AboutWindow(
             transient_for=self.props.active_window,
-            application_name="aurea",
+            application_name="Aurea",
             application_icon="io.github.cleomenezesjr.aurea",
             developer_name="Cleo Menezes Jr.",
             version="0.1.0",
