@@ -51,7 +51,7 @@ class AureaWindow(Adw.ApplicationWindow):
     @Gtk.Template.Callback()
     def open_file_dialog(self, action: Gtk.Button) -> None:
         filter: Gtk.FileFilter = Gtk.FileFilter()
-        filter.add_mime_type('application/xml')
+        filter.add_mime_type("application/xml")
         dialog = Gtk.FileDialog(default_filter=filter)
         dialog.open(self, None, self.on_file_opened)
 
@@ -91,10 +91,10 @@ class AureaWindow(Adw.ApplicationWindow):
 
         xml_tree: ET = ET.parse(file.get_path())
 
-        name: str = xml_tree.find("name").text
-        self.title.set_label(name or "No Name")
-        summary:str = xml_tree.find("summary").text
-        self.description.set_label(summary or "No summary")
+        name: str = xml_tree.find("name")
+        self.title.set_label(name.text if name else "No name")
+        summary: str = xml_tree.find("summary")
+        self.description.set_label(summary.text if summary else "No summary")
 
         self.main_card.remove_css_class("main-card")
         self.branding_colors = self.get_branding_colors(xml_tree)
