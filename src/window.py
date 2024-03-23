@@ -91,10 +91,12 @@ class AureaWindow(Adw.ApplicationWindow):
 
         xml_tree: ET = ET.parse(file.get_path())
 
-        name: str = xml_tree.find("name")
-        self.title.set_label(name.text if name else "No name")
-        summary: str = xml_tree.find("summary")
-        self.description.set_label(summary.text if summary else "No summary")
+        name: ET.Element = xml_tree.find("name")
+        self.title.set_label("No name" if name is None else name.text)
+        summary: ET.Element = xml_tree.find("summary")
+        self.description.set_label(
+            "No summary" if summary is None else summary.text
+        )
 
         self.main_card.remove_css_class("main-card")
         self.branding_colors = self.get_branding_colors(xml_tree)
