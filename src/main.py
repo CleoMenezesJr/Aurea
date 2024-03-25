@@ -54,8 +54,7 @@ class AureaApplication(Adw.Application):
 
     def on_about_action(self, widget, _):
         """Callback for the app.about action."""
-        about = Adw.AboutWindow(
-            transient_for=self.props.active_window,
+        about = Adw.AboutDialog(
             application_name="Aurea",
             application_icon="io.github.cleomenezesjr.aurea",
             developer_name="Cleo Menezes Jr.",
@@ -63,7 +62,7 @@ class AureaApplication(Adw.Application):
             developers=["Cleo Menezes Jr."],
             copyright="© 2024 Cleo Menezes Jr.",
         )
-        about.present()
+        about.present(self.props.active_window)
 
     def create_action(self, name, callback, shortcuts=None):
         """Add an application action.
@@ -85,3 +84,4 @@ def main(version):
     """The application's entry point."""
     app = AureaApplication()
     return app.run(sys.argv)
+
