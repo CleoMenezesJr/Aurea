@@ -54,9 +54,19 @@ template $AureaWindow : Adw.ApplicationWindow {
         StackPage {
           name: "welcome_page";
           child: Adw.StatusPage status_page {
-            title: _("Preview Metainfo File");
-            description: _("Select a metainfo file to preview.");
+            title: _("Open a Metainfo File");
             icon-name: "folder-documents-symbolic";
+
+            Button {
+              label: _("Open…");
+              halign: center;
+              clicked => $open_file_dialog();
+
+              styles [
+                "pill",
+                "suggested-action"
+              ]
+            }
           }
 
           ;
