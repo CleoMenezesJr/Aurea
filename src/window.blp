@@ -120,17 +120,21 @@ template $AureaWindow : Adw.ApplicationWindow {
                           ]
                         }
 
-                        Label title {
-                          label: _("Application Name");
+                        EditableLabel title {
+                          halign: center;
+                          xalign: 0.50;
+                          text: _("Application Name");
 
                           styles [
                             "title-1"
                           ]
                         }
 
-                        Label description {
+                        EditableLabel description {
                           margin-top: 12;
-                          label: _("A nice description for an app");
+                          halign: center;
+                          xalign: 0.50;
+                          text: _("A nice description for an app");
 
                           styles [
                             "title-4"
