@@ -26,7 +26,7 @@ import gi
 gi.require_versions({"Gtk": "4.0", "Soup": "3.0", "Adw": "1"})
 
 if gi:
-    from gi.repository import Adw, Gio, Gtk
+    from gi.repository import Adw, Gio
 
     from .window import AureaWindow
 
