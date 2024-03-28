@@ -20,14 +20,15 @@
 """
 
 import sys
+
 import gi
 
-gi.require_version('Gtk', '4.0')
-gi.require_version('Soup', '3.0')
-gi.require_version('Adw', '1')
+gi.require_versions({"Gtk": "4.0", "Soup": "3.0", "Adw": "1"})
 
-from gi.repository import Gtk, Gio, Adw
-from .window import AureaWindow
+if gi:
+    from gi.repository import Adw, Gio, Gtk
+
+    from .window import AureaWindow
 
 
 class AureaApplication(Adw.Application):
@@ -84,4 +85,3 @@ def main(version):
     """The application's entry point."""
     app = AureaApplication()
     return app.run(sys.argv)
-
