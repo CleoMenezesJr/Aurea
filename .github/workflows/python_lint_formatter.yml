@@ -20,7 +20,7 @@ jobs:
           pip install ruff black
 
       - name: Lint with Ruff
-        run: ruff .
+        run: ruff check .
 
       - name: Format with Black
         run: black .
