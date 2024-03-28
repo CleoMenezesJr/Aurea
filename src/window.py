@@ -21,6 +21,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 import array
 import io
+import logging
 import os
 import xml.etree.ElementTree as ET
 from threading import Thread
@@ -75,7 +76,16 @@ class AureaWindow(Adw.ApplicationWindow):
             None,
         )
 
-        contents: tuple = file.load_contents_finish(result)
+        try:
+            contents: tuple = file.load_contents_finish(result)
+        except GLib.Error:
+            logging.exception("Could not load file contents")
+            self.toast_overlay.add_toast(
+                Adw.Toast.new("Can't load appdata.")
+            )
+            self.stack.props.visible_child_name = "welcome_page"
+            return None
+
         if not contents[0]:
             self.stack.props.visible_child_name = "welcome_page"
             return None
