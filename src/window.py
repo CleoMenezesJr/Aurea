@@ -92,9 +92,9 @@ class AureaWindow(Adw.ApplicationWindow):
         xml_tree: ET = ET.parse(file.get_path())
 
         name: ET.Element = xml_tree.find("name")
-        self.title.set_text("No name" if name is None else name.text)
+        self.title.set_label("No name" if name is None else name.text)
         summary: ET.Element = xml_tree.find("summary")
-        self.description.set_text(
+        self.description.set_label(
             "No summary" if summary is None else summary.text
         )
 
