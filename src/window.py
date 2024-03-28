@@ -21,11 +21,12 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 import array
 import io
+import logging
 import os
 import xml.etree.ElementTree as ET
 from threading import Thread
 
-from gi.repository import Adw, Gdk, GdkPixbuf, Gio, GLib, Gtk, Soup
+from gi.repository import Adw, Gdk, Gio, GLib, Gtk, Soup
 from PIL import Image
 
 
@@ -162,13 +163,13 @@ class AureaWindow(Adw.ApplicationWindow):
             self.toast_overlay.add_toast(Adw.Toast.new("No icon found."))
             return None
 
-        pixbuf: GdkPixbuf.Pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
-            icon_path,
-            width=380,
-            height=380,
-            preserve_aspect_ratio=True,
-        )
-        GLib.idle_add(self.icon.set_from_pixbuf, pixbuf)
+        icon_file = Gio.File.new_for_path(icon_path)
+        try:
+            texture: Gdk.Texture = Gdk.Texture.new_from_file(icon_file)
+        except GLib.Error:
+            logging.exception("Could not load exception")
+        else:
+            GLib.idle_add(self.icon.set_from_paintable, texture)
 
     def set_screenshot_image(self, image_bytes: bytes) -> None:
         self.screenshot.props.visible = bool(image_bytes)
@@ -177,19 +178,18 @@ class AureaWindow(Adw.ApplicationWindow):
 
         image: Image.Image = self.crop_screenshot_bottom(image_bytes)
 
-        image_array = array.array("B", image.tobytes())
-        width, height = image.size
-        texture = GdkPixbuf.Pixbuf.new_from_data(
-            image_array,
-            GdkPixbuf.Colorspace.RGB,
-            True,
-            8,
-            width,
-            height,
-            width * 4,
-        )
+        buf = io.BytesIO()
+        image.save(buf, format='PNG')
+        image_array = buf.getbuffer()
+        try:
+            texture = Gdk.Texture.new_from_bytes(
+                GLib.Bytes.new(image_array),
+            )
+        except GLib.Error:
+            logging.exception("Could not read texture from bytes")
+        else:
+            GLib.idle_add(self.screenshot.set_paintable, texture)
 
-        GLib.idle_add(self.screenshot.set_pixbuf, texture)
         return None
 
     def fetch_screenshot_image_bytes(self, url: str) -> bytes | str:
