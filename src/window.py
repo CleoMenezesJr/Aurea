@@ -239,16 +239,42 @@ class AureaWindow(Adw.ApplicationWindow):
             Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
         )
 
-    def get_branding_colors(self, xml_tree: ET) -> dict | str:
+    def get_branding_colors(self, xml_tree: ET) -> dict | None:
         branding = xml_tree.find("./branding")
         if branding is None:
             self.toast_overlay.add_toast(Adw.Toast.new("No branding colors."))
             return None
 
-        light_color = branding.find('./color[@scheme_preference="light"]').text
-        dark_color = branding.find('./color[@scheme_preference="dark"]').text
+        dark_color = branding.find('./color[@scheme_preference="dark"]')
+        light_color = branding.find('./color[@scheme_preference="light"]')
 
-        return {"light": light_color, "dark": dark_color}
+        if light_color is None and dark_color is None:
+            self.toast_overlay.add_toast(
+                Adw.Toast.new(
+                    "Light and dark brand color have not been defined."
+                )
+            )
+            return None
+
+        color_scheme: dict = {
+            "light": "transparent",
+            "dark": "transparent",
+        }
+
+        if light_color is not None:
+            color_scheme["light"] = light_color.text
+        else:
+            self.toast_overlay.add_toast(
+                Adw.Toast.new("Light brand color have not been defined.")
+            )
+        if dark_color is not None:
+            color_scheme["dark"] = dark_color.text
+        else:
+            self.toast_overlay.add_toast(
+                Adw.Toast.new("Dark brand color have not been defined.")
+            )
+
+        return color_scheme
 
     def which_color_scheme(self) -> str:
         is_color_scheme_dark: bool = Adw.StyleManager.get_default().get_dark()
