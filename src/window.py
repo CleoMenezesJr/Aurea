@@ -19,7 +19,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 SPDX-License-Identifier: GPL-3.0-or-later
 """
 
-import array
 import io
 import logging
 import os
@@ -186,7 +185,7 @@ class AureaWindow(Adw.ApplicationWindow):
         image: Image.Image = self.crop_screenshot_bottom(image_bytes)
 
         buf = io.BytesIO()
-        image.save(buf, format='PNG')
+        image.save(buf, format="PNG")
         image_array = buf.getbuffer()
         try:
             texture = Gdk.Texture.new_from_bytes(
