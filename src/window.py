@@ -80,9 +80,7 @@ class AureaWindow(Adw.ApplicationWindow):
             contents: tuple = file.load_contents_finish(result)
         except GLib.Error:
             logging.exception("Could not load file contents")
-            self.toast_overlay.add_toast(
-                Adw.Toast.new("Can't load appdata.")
-            )
+            self.toast_overlay.add_toast(Adw.Toast.new("Can't load appdata."))
             self.stack.props.visible_child_name = "welcome_page"
             return None
 
@@ -214,7 +212,9 @@ class AureaWindow(Adw.ApplicationWindow):
                 self.toast_overlay.add_toast(
                     Adw.Toast.new("Can't load screenshot.")
                 )
-                return f"{message.props.status_code} - {message.props.reason_phrase}"
+                status_code = message.props.status_code
+                reason_phrase = message.props.reason_phrase
+                return f"{status_code} - {reason_phrase}"
 
             return self.set_screenshot_image(bytes.get_data())
 
