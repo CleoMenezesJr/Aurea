@@ -25,7 +25,7 @@ import os
 import xml.etree.ElementTree as ET
 from threading import Thread
 
-from gi.repository import Adw, Gdk, Gio, GLib, Gtk, Soup
+from gi.repository import Adw, Gdk, GdkPixbuf, Gio, GLib, Gtk, Soup
 from PIL import Image
 
 
@@ -169,13 +169,17 @@ class AureaWindow(Adw.ApplicationWindow):
             self.toast_overlay.add_toast(Adw.Toast.new("No icon found."))
             return None
 
-        icon_file = Gio.File.new_for_path(icon_path)
         try:
-            texture: Gdk.Texture = Gdk.Texture.new_from_file(icon_file)
+            pixbuf: GdkPixbuf.Pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
+                icon_path,
+                width=380,
+                height=380,
+                preserve_aspect_ratio=True,
+            )
         except GLib.Error:
             logging.exception("Could not load exception")
         else:
-            GLib.idle_add(self.icon.set_from_paintable, texture)
+            GLib.idle_add(self.icon.set_from_pixbuf, pixbuf)
 
     def set_screenshot_image(self, image_bytes: bytes) -> None:
         self.screenshot.props.visible = bool(image_bytes)
