@@ -227,6 +227,8 @@ class AureaWindow(Adw.ApplicationWindow):
     def crop_screenshot_bottom(self, image_bytes: bytes) -> Image.Image:
         image = Image.open(io.BytesIO(image_bytes))
         width, height = image.size
+        if width <= 700:
+            return image
         image = image.crop((0, 0, width, int(height * 0.8)))
 
         return image
