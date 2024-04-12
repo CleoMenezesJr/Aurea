@@ -37,16 +37,28 @@ class AureaWindow(Adw.ApplicationWindow):
     stack: Gtk.Stack = Gtk.Template.Child()
     window_title: Adw.WindowTitle = Gtk.Template.Child()
     main_card: Gtk.Box = Gtk.Template.Child()
+    main_card_dark: Gtk.Box = Gtk.Template.Child()
     icon: Gtk.Image = Gtk.Template.Child()
+    icon_dark: Gtk.Image = Gtk.Template.Child()
     title: Gtk.Label = Gtk.Template.Child()
+    title_dark: Gtk.Label = Gtk.Template.Child()
     description: Gtk.Label = Gtk.Template.Child()
+    description_dark: Gtk.Label = Gtk.Template.Child()
     screenshot: Gtk.Picture = Gtk.Template.Child()
+    screenshot_dark: Gtk.Picture = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
         self.style_provider = Gtk.CssProvider()
         self.style_manager = Adw.StyleManager.get_default()
+
+        _title_dark_label = self.title_dark.get_first_child().get_first_child()
+        _title_dark_label.add_css_class("card_fg_dark_color")
+        _description_dark_label = (
+            self.description_dark.get_first_child().get_first_child()
+        )
+        _description_dark_label.add_css_class("card_fg_dark_color")
 
     @Gtk.Template.Callback()
     def open_file_dialog(self, action: Gtk.Button) -> None:
@@ -80,12 +92,16 @@ class AureaWindow(Adw.ApplicationWindow):
         except GLib.Error:
             logging.exception("Could not load file contents")
             self.toast_overlay.add_toast(Adw.Toast.new("Can't load appdata."))
+            self.stack.props.valign = "center"
             self.stack.props.visible_child_name = "welcome_page"
             return None
 
         if not contents[0]:
+            self.stack.props.valign = "center"
             self.stack.props.visible_child_name = "welcome_page"
             return None
+
+        self.style_manager.props.color_scheme = Adw.ColorScheme.FORCE_LIGHT
 
         path: str = file.peek_path()
         file_name: str = info.get_name()
@@ -100,15 +116,21 @@ class AureaWindow(Adw.ApplicationWindow):
 
         name: ET.Element = xml_tree.find("name")
         self.title.set_text("No name" if name is None else name.text)
+        self.title_dark.set_text("No name" if name is None else name.text)
         summary: ET.Element = xml_tree.find("summary")
         self.description.set_text(
             "No summary" if summary is None else summary.text
         )
+        self.description_dark.set_text(
+            "No summary" if summary is None else summary.text
+        )
 
         self.main_card.remove_css_class("main-card")
+        self.main_card_dark.remove_css_class("main-card-dark")
         self.branding_colors = self.get_branding_colors(xml_tree)
         if self.branding_colors:
             self.main_card.add_css_class("main-card")
+            self.main_card_dark.add_css_class("main-card-dark")
             self.set_background_card_color(self.branding_colors)
 
         screenshots_tag: ET.Element = xml_tree.find("screenshots")
@@ -120,6 +142,7 @@ class AureaWindow(Adw.ApplicationWindow):
             self.fetch_screenshot_image_bytes(screenshot_url.text.strip())
 
         if self.stack.props.visible_child_name == "welcome_page":
+            self.stack.props.valign = "end"
             self.stack.props.visible_child_name = "content_page"
 
     def get_icon_file_path(
@@ -147,6 +170,9 @@ class AureaWindow(Adw.ApplicationWindow):
             # attempt to locate it in the parent directory.
             if not icon_path:
                 self.icon.props.icon_name = "application-x-executable-symbolic"
+                self.icon_dark.props.icon_name = (
+                    "application-x-executable-symbolic"
+                )
                 metainfo_path: str = os.path.dirname(
                     os.path.dirname(metainfo_path)
                 )
@@ -166,6 +192,9 @@ class AureaWindow(Adw.ApplicationWindow):
     def set_icon(self, icon_path: str) -> None:
         if not icon_path:
             self.icon.props.icon_name = "application-x-executable-symbolic"
+            self.icon_dark.props.icon_name = (
+                "application-x-executable-symbolic"
+            )
             self.toast_overlay.add_toast(Adw.Toast.new("No icon found."))
             return None
 
@@ -180,6 +209,7 @@ class AureaWindow(Adw.ApplicationWindow):
             logging.exception("Could not load exception")
         else:
             GLib.idle_add(self.icon.set_from_pixbuf, pixbuf)
+            GLib.idle_add(self.icon_dark.set_from_pixbuf, pixbuf)
 
     def set_screenshot_image(self, image_bytes: bytes) -> None:
         self.screenshot.props.visible = bool(image_bytes)
@@ -199,6 +229,7 @@ class AureaWindow(Adw.ApplicationWindow):
             logging.exception("Could not read texture from bytes")
         else:
             GLib.idle_add(self.screenshot.set_paintable, texture)
+            GLib.idle_add(self.screenshot_dark.set_paintable, texture)
 
         return None
 
@@ -234,9 +265,11 @@ class AureaWindow(Adw.ApplicationWindow):
         return image
 
     def set_background_card_color(self, colors: dict) -> str:
-        color: str = colors[self.which_color_scheme()]
         self.style_provider.load_from_string(
-            f".main-card {{ background-color: {color};}}"
+            f"""
+            .main-card {{ background-color: {colors['light']}; }}
+            .main-card-dark {{ background-color: {colors['dark']}; }}
+            """
         )
 
         Gtk.StyleContext.add_provider_for_display(
@@ -281,21 +314,3 @@ class AureaWindow(Adw.ApplicationWindow):
             )
 
         return color_scheme
-
-    def which_color_scheme(self) -> str:
-        is_color_scheme_dark: bool = Adw.StyleManager.get_default().get_dark()
-        if is_color_scheme_dark:
-            return "dark"
-
-        return "light"
-
-    @Gtk.Template.Callback()
-    def cycle_color_scheme(self, widget) -> None:
-        self.style_manager.props.color_scheme = (
-            Adw.ColorScheme.FORCE_LIGHT
-            if self.which_color_scheme() == "dark"
-            else Adw.ColorScheme.FORCE_DARK
-        )
-
-        if self.branding_colors:
-            self.set_background_card_color(self.branding_colors)

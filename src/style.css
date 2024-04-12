@@ -1,0 +1,11 @@
+.window_bg_dark_color {
+  background-color: #242424;
+}
+
+.card_bg_dark_color {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.card_fg_dark_color {
+  color: #ffffff;
+}

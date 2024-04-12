@@ -2,10 +2,10 @@ using Gtk 4.0;
 using Adw 1;
 
 template $AureaWindow : Adw.ApplicationWindow {
-  default-width: 1450;
-  default-height: 600;
-  width-request: 1450;
-  height-request: 600;
+  default-width: 1346;
+  default-height: 965;
+  width-request: 397;
+  height-request: 965;
 
   Adw.Breakpoint {
     condition ("max-width: 600sp")
@@ -13,6 +13,8 @@ template $AureaWindow : Adw.ApplicationWindow {
     setters {
       content_view.halign: fill;
       screenshot_box.visible: false;
+      content_view_dark.halign: fill;
+      screenshot_box_dark.visible: false;
     }
   }
 
@@ -50,6 +52,8 @@ template $AureaWindow : Adw.ApplicationWindow {
     Adw.ToastOverlay toast_overlay {
       Stack stack {
         transition-type: crossfade;
+        vhomogeneous: false;
+        valign: center;
 
         StackPage {
           name: "welcome_page";
@@ -74,27 +78,29 @@ template $AureaWindow : Adw.ApplicationWindow {
 
         StackPage {
           name: "content_page";
-          child: Adw.Clamp clamp {
-            maximum-size: 1500;
-            tightening-threshold: 1050;
-            margin-bottom: 24;
-            height-request: 470;
-            halign: fill;
+          child: Grid {
             valign: center;
-            margin-start: 12;
-            margin-end: 12;
+            Box {
+              margin-top: 24;
+              layout {
+                row: 0;
+                column: 0;
+              }
 
-            Box main_card {
-              hexpand: true;
-              vexpand: true;
-
-              Overlay {
+              Adw.Clamp clamp {
+                maximum-size: 1300;
+                tightening-threshold: 2050;
+                margin-bottom: 24;
+                height-request: 410;
                 halign: fill;
-                valign: fill;
-                hexpand: true;
-                vexpand: true;
+                valign: center;
+                margin-start: 12;
+                margin-end: 12;
 
-                Box {
+                Box main_card {
+                  hexpand: true;
+                  vexpand: true;
+
                   Adw.Clamp content_view {
                     maximum-size: 500;
                     tightening-threshold: 600;
@@ -145,78 +151,120 @@ template $AureaWindow : Adw.ApplicationWindow {
 
                   Box screenshot_box{
                     halign: end;
+                    valign: end;
                     orientation: vertical;
                     margin-end: 40;
 
                     Picture screenshot {
-                      halign: start;
+                      halign: start; //why
                       valign: end;
                       vexpand: true;
                       can-shrink: true;
                       // content-fit: scale_down;
                     }
                   }
-                }
-
-
-                [overlay]
-                Button previous_button {
-                  use-underline: true;
-                  halign: start;
-                  valign: center;
-                  width-request: 64;
-                  height-request: 64;
-                  margin-top: 9;
-                  margin-bottom: 9;
-                  margin-start: 9;
-                  margin-end: 9;
-                  icon-name: 'go-previous-symbolic';
-                  clicked => $cycle_color_scheme();
-
-                  accessibility {
-                    label: _('Previous');
-                  }
 
                   styles [
-                    "circular",
-                    "flat",
-                    "image-button",
+                    "card",
+                    "background-card",
                   ]
                 }
+               }
+            }
 
-                [overlay]
-                Button next_button {
-                  use-underline: true;
-                  halign: end;
-                  valign: center;
-                  width-request: 64;
-                  height-request: 64;
-                  margin-top: 9;
-                  margin-bottom: 9;
-                  margin-start: 9;
-                  margin-end: 9;
-                  icon-name: 'go-next-symbolic';
-                  clicked => $cycle_color_scheme();
-
-                  accessibility {
-                    label: _('Next');
-                  }
-
-                  styles [
-                    "circular",
-                    "flat",
-                    "image-button",
-                  ]
-                }
+            Box {
+              layout {
+                row: 1;
+                column: 0;
               }
 
-              styles [
-                "card",
-                "background-card",
-              ]
+              styles ["window_bg_dark_color"]
+
+              Adw.Clamp clamp_dark {
+                maximum-size: 1300;
+                tightening-threshold: 2050;
+                height-request: 410;
+                halign: fill;
+                valign: center;
+                margin-start: 12;
+                margin-end: 12;
+                margin-bottom: 90;
+                margin-top: 24;
+
+                Box main_card_dark {
+                  hexpand: true;
+                  vexpand: true;
+
+                  Adw.Clamp content_view_dark {
+                    maximum-size: 500;
+                    tightening-threshold: 600;
+                    height-request: 318;
+                    halign: start;
+                    valign: fill;
+
+                    Box {
+                      halign: center;
+                      valign: center;
+                      orientation: vertical;
+
+                        Image icon_dark {
+                          icon-name: "application-x-executable-symbolic";
+                          icon-size: normal;
+                          margin-bottom: 12;
+                          halign: center;
+                          valign: end;
+                          pixel-size: 190;
+
+                          styles [
+                            "icon-dropshadow",
+                            "card_fg_dark_color"
+                          ]
+                        }
+
+                        EditableLabel title_dark {
+                          halign: center;
+                          xalign: 0.50;
+                          text: _("Application Name");
+
+                          styles ["title-1"]
+                        }
+
+                        EditableLabel description_dark {
+                          margin-top: 12;
+                          halign: center;
+                          xalign: 0.50;
+                          text: _("A nice description for an app");
+
+                          styles [
+                            "title-4"
+                          ]
+                        }
+                    }
+                  }
+
+                  Box screenshot_box_dark {
+                    halign: end;
+                    valign: end;
+                    orientation: vertical;
+                    margin-end: 40;
+
+                    Picture screenshot_dark {
+                      halign: start; //why
+                      valign: end;
+                      vexpand: true;
+                      can-shrink: true;
+                      // content-fit: scale_down;
+                    }
+                  }
+
+                  styles [
+                    "card",
+                    "card_bg_dark_color",
+                  ]
+                }
+               }
             }
-           }
-          ;
+          };
         }
       }
     }
