@@ -8,13 +8,13 @@ template $AureaWindow : Adw.ApplicationWindow {
   height-request: 965;
 
   Adw.Breakpoint {
-    condition ("max-width: 600sp")
+    condition ("max-width: 1200sp")
 
     setters {
       content_view.halign: fill;
-      screenshot_box.visible: false;
+      screenshot.visible: false;
       content_view_dark.halign: fill;
-      screenshot_box_dark.visible: false;
+      screenshot_dark.visible: false;
     }
   }
 
@@ -101,66 +101,66 @@ template $AureaWindow : Adw.ApplicationWindow {
                   hexpand: true;
                   vexpand: true;
 
-                  Adw.Clamp content_view {
-                    maximum-size: 500;
-                    tightening-threshold: 600;
-                    height-request: 318;
-                    halign: start;
+                  Overlay {
+                    halign: fill;
                     valign: fill;
+                    hexpand: true;
+                    vexpand: true;
 
-                    Box {
-                      halign: center;
-                      valign: center;
-                      orientation: vertical;
+                    Adw.Clamp content_view {
+                      maximum-size: 500;
+                      tightening-threshold: 600;
+                      height-request: 318;
+                      halign: start;
+                      valign: fill;
 
-                        Image icon {
-                          icon-name: "application-x-executable-symbolic";
-                          icon-size: normal;
-                          margin-bottom: 12;
-                          halign: center;
-                          valign: end;
-                          pixel-size: 190;
+                      Box {
+                        halign: center;
+                        valign: center;
+                        orientation: vertical;
 
-                          styles [
-                            "icon-dropshadow"
-                          ]
-                        }
+                          Image icon {
+                            icon-name: "application-x-executable-symbolic";
+                            icon-size: normal;
+                            margin-bottom: 12;
+                            halign: center;
+                            valign: end;
+                            pixel-size: 190;
 
-                        EditableLabel title {
-                          halign: center;
-                          xalign: 0.50;
-                          text: _("Application Name");
+                            styles [
+                              "icon-dropshadow"
+                            ]
+                          }
 
-                          styles [
-                            "title-1"
-                          ]
-                        }
+                          EditableLabel title {
+                            halign: center;
+                            xalign: 0.50;
+                            text: _("Application Name");
 
-                        EditableLabel description {
-                          margin-top: 6;
-                          halign: center;
-                          xalign: 0.50;
-                          text: _("A nice description for an app");
+                            styles [
+                              "title-1"
+                            ]
+                          }
 
-                          styles [
-                            "caption"
-                          ]
-                        }
+                          EditableLabel description {
+                            margin-top: 6;
+                            halign: center;
+                            xalign: 0.50;
+                            text: _("A nice description for an app");
+
+                            styles [
+                              "caption"
+                            ]
+                          }
+                      }
                     }
-                  }
 
-                  Box screenshot_box{
-                    halign: end;
-                    valign: end;
-                    orientation: vertical;
-                    margin-end: 40;
-
+                    [overlay]
                     Picture screenshot {
-                      halign: start; //why
-                      valign: end;
+                      halign: end;
+                      valign: fill;
                       vexpand: true;
                       can-shrink: true;
-                      // content-fit: scale_down;
                     }
                   }
 
@@ -195,65 +195,66 @@ template $AureaWindow : Adw.ApplicationWindow {
                   hexpand: true;
                   vexpand: true;
 
-                  Adw.Clamp content_view_dark {
-                    maximum-size: 500;
-                    tightening-threshold: 600;
-                    height-request: 318;
-                    halign: start;
+                  Overlay {
+                    halign: fill;
                     valign: fill;
+                    hexpand: true;
+                    vexpand: true;
 
-                    Box {
-                      halign: center;
-                      valign: center;
-                      orientation: vertical;
+                    Adw.Clamp content_view_dark {
+                      maximum-size: 500;
+                      tightening-threshold: 600;
+                      height-request: 318;
+                      halign: start;
+                      valign: fill;
 
-                        Image icon_dark {
-                          icon-name: "application-x-executable-symbolic";
-                          icon-size: normal;
-                          margin-bottom: 12;
-                          halign: center;
-                          valign: end;
-                          pixel-size: 190;
+                      Box {
+                        halign: center;
+                        valign: center;
+                        orientation: vertical;
 
-                          styles [
-                            "icon-dropshadow",
-                            "card_fg_dark_color"
-                          ]
-                        }
+                          Image icon_dark {
+                            icon-name: "application-x-executable-symbolic";
+                            icon-size: normal;
+                            margin-bottom: 12;
+                            halign: center;
+                            valign: end;
+                            pixel-size: 190;
 
-                        EditableLabel title_dark {
-                          halign: center;
-                          xalign: 0.50;
-                          text: _("Application Name");
+                            styles [
+                              "icon-dropshadow"
+                            ]
+                          }
 
-                          styles ["title-1"]
-                        }
+                          EditableLabel title_dark {
+                            halign: center;
+                            xalign: 0.50;
+                            text: _("Application Name");
 
-                        EditableLabel description_dark {
-                          margin-top: 6;
-                          halign: center;
-                          xalign: 0.50;
-                          text: _("A nice description for an app");
+                            styles [
+                              "title-1"
+                            ]
+                          }
 
-                          styles [
-                            "caption"
-                          ]
-                        }
+                          EditableLabel description_dark {
+                            margin-top: 6;
+                            halign: center;
+                            xalign: 0.50;
+                            text: _("A nice description for an app");
+
+                            styles [
+                              "caption"
+                            ]
+                          }
+                      }
                     }
-                  }
 
-                  Box screenshot_box_dark {
-                    halign: end;
-                    valign: end;
-                    orientation: vertical;
-                    margin-end: 40;
-
+                    [overlay]
                     Picture screenshot_dark {
-                      halign: start; //why
-                      valign: end;
+                      halign: end;
+                      valign: fill;
                       vexpand: true;
                       can-shrink: true;
-                      // content-fit: scale_down;
                     }
                   }
 
