@@ -3,7 +3,7 @@ using Adw 1;
 
 template $AureaWindow : Adw.ApplicationWindow {
   default-width: 1346;
-  default-height: 965;
+  default-height: 962;
   width-request: 397;
   height-request: 500;
 
@@ -17,15 +17,6 @@ template $AureaWindow : Adw.ApplicationWindow {
       screenshot_dark.visible: false;
     }
   }
-
-  Adw.Breakpoint {
-    condition ("min-height: 966sp")
-
-    setters {
-      clamp_dark.margin-bottom: 90;
-    }
-  }
-
 
   content:
   Adw.ToolbarView {
@@ -62,7 +53,7 @@ template $AureaWindow : Adw.ApplicationWindow {
         Stack stack {
           transition-type: crossfade;
           vhomogeneous: false;
-          valign: center;
+          valign: fill;
 
           StackPage {
             name: "welcome_page";
@@ -88,7 +79,7 @@ template $AureaWindow : Adw.ApplicationWindow {
           StackPage {
             name: "content_page";
             child: Grid {
-              valign: center;
+            valign: fill;
               Box {
                 margin-top: 24;
                 layout {

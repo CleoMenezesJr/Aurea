@@ -92,12 +92,10 @@ class AureaWindow(Adw.ApplicationWindow):
         except GLib.Error:
             logging.exception("Could not load file contents")
             self.toast_overlay.add_toast(Adw.Toast.new("Can't load appdata."))
-            self.stack.props.valign = "center"
             self.stack.props.visible_child_name = "welcome_page"
             return None
 
         if not contents[0]:
-            self.stack.props.valign = "center"
             self.stack.props.visible_child_name = "welcome_page"
             return None
 
@@ -142,7 +140,6 @@ class AureaWindow(Adw.ApplicationWindow):
             self.fetch_screenshot_image_bytes(screenshot_url.text.strip())
 
         if self.stack.props.visible_child_name == "welcome_page":
-            self.stack.props.valign = "end"
             self.stack.props.visible_child_name = "content_page"
 
     def get_icon_file_path(
