@@ -253,13 +253,22 @@ class AureaWindow(Adw.ApplicationWindow):
         )
 
     def crop_screenshot_bottom(self, image_bytes: bytes) -> Image.Image:
-        image = Image.open(io.BytesIO(image_bytes))
+        image: Image = Image.open(io.BytesIO(image_bytes))
         width, height = image.size
+
+        self.screenshot.set_content_fit(
+            Gtk.ContentFit.SCALE_DOWN if width <= 700 else Gtk.ContentFit.COVER
+        )
+        self.screenshot_dark.set_content_fit(
+            Gtk.ContentFit.SCALE_DOWN if width <= 700 else Gtk.ContentFit.COVER
+        )
         if width <= 700:
             return image
-        image = image.crop((0, 0, width, int(height * 0.8)))
 
-        return image
+        crop_height = max(height - 440, 0)
+        cropped_image = image.crop((0, 0, width, height - crop_height))
+
+        return cropped_image
 
     def set_background_card_color(self, colors: dict) -> str:
         self.style_provider.load_from_string(
