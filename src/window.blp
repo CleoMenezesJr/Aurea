@@ -3,9 +3,9 @@ using Adw 1;
 
 template $AureaWindow : Adw.ApplicationWindow {
   default-width: 1424;
-  default-height: 870;
+  default-height: 824;
   width-request: 397;
-  height-request: 450;
+  height-request: 434;
 
   Adw.Breakpoint {
     condition ("max-width: 1300sp")
@@ -81,7 +81,7 @@ template $AureaWindow : Adw.ApplicationWindow {
             child: Grid {
             valign: fill;
               Box {
-                margin-top: 24;
+                margin-top: 12;
                 layout {
                   row: 0;
                   column: 0;
@@ -90,7 +90,7 @@ template $AureaWindow : Adw.ApplicationWindow {
                 Adw.Clamp clamp {
                   maximum-size: 1400;
                   tightening-threshold: 2050;
-                  margin-bottom: 24;
+                  margin-bottom: 12;
                   height-request: 364;
                   halign: fill;
                   valign: center;
@@ -197,8 +197,8 @@ template $AureaWindow : Adw.ApplicationWindow {
                   valign: center;
                   margin-start: 12;
                   margin-end: 12;
-                  margin-bottom: 24;
-                  margin-top: 24;
+                  margin-bottom: 12;
+                  margin-top: 12;
 
                   Box main_card_dark {
                     hexpand: true;
