@@ -1,7 +1,7 @@
 {
   "app-id": "io.github.cleomenezesjr.aurea",
   "runtime": "org.gnome.Platform",
-  "runtime-version": "master",
+  "runtime-version": "46",
   "sdk": "org.gnome.Sdk",
   "command": "aurea",
   "finish-args": [
@@ -27,7 +27,9 @@
     {
       "name": "blueprint-compiler",
       "buildsystem": "meson",
-      "cleanup": ["*"],
+      "cleanup": [
+        "*"
+      ],
       "sources": [
         {
           "type": "git",
