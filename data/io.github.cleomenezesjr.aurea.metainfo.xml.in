@@ -3,8 +3,31 @@
 	<id>io.github.cleomenezesjr.aurea</id>
 	<metadata_license>CC0-1.0</metadata_license>
 	<project_license>GPL-3.0-or-later</project_license>
-  <summary>good morning</summary>
+  <name>Aurea</name>
+  <summary>A banner previewer for Flatpak metainfo files</summary>
 	<description>
-	  <p>No description</p>
+	  <p>Aurea is a simple preview banner made to read metainfo files from Flatpak apps and represent them as they would on Flathub.</p>
 	</description>
+  <developer_name translatable="no">Cleo Menezes Jr.</developer_name>
+  <branding>
+    <color type="primary" scheme_preference="light">#dc8add</color>
+    <color type="primary" scheme_preference="dark">#9141ac</color>
+  </branding>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/CleoMenezesJr/Aurea/main/data/screenshots/1.png</image>
+      <caption>Aurea</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/CleoMenezesJr/Aurea/main/data/screenshots/2.png</image>
+      <caption>Aurea Mobile View</caption>
+    </screenshot>
+  </screenshots>
+  <releases>
+    <release version="1.0" date="2024-04-25">
+      <description translatable="no">
+        <p>First stable release</p>
+      </description>
+    </release>
+  </releases>
 </component>

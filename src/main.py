@@ -26,7 +26,8 @@ import gi
 gi.require_versions({"Gtk": "4.0", "Soup": "3.0", "Adw": "1"})
 
 if gi:
-    from gi.repository import Adw, Gio
+    from gi.repository import Adw, Gio, Gtk
+
     from .window import AureaWindow
 
 
@@ -57,10 +58,15 @@ class AureaApplication(Adw.Application):
         about = Adw.AboutDialog(
             application_name="Aurea",
             application_icon="io.github.cleomenezesjr.aurea",
+            comments="A banner previewer for Flatpak metainfo files",
             developer_name="Cleo Menezes Jr.",
-            version="0.1.0",
-            developers=["Cleo Menezes Jr."],
+            version="1.0",
+            developers=["Cleo Menezes Jr. https://github.com/CleoMenezesJr"],
             copyright="© 2024 Cleo Menezes Jr.",
+            support_url="https://matrix.to/#/%23aurea-app:matrix.org",
+            issue_url="https://github.com/CleoMenezesJr/Aurea/issues/new",
+            license_type=Gtk.License.GPL_3_0,
+            designers=["Tobias Bernard https://github.com/bertob"],
         )
         about.present(self.props.active_window)
 
