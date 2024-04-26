@@ -1,8 +1,9 @@
 [Desktop Entry]
-Name=aurea
+Name=Aurea
+Comment=A banner previewer for Flatpak metainfo files
 Exec=aurea
 Icon=io.github.cleomenezesjr.aurea
 Terminal=false
 Type=Application
-Categories=Game;
+Categories=GTK;Development;;
 StartupNotify=true
