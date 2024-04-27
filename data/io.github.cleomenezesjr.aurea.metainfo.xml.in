@@ -13,8 +13,8 @@
   <launchable type="desktop-id">io.github.cleomenezesjr.aurea.desktop</launchable>
   <developer_name translatable="no">Cleo Menezes Jr.</developer_name>
   <branding>
-    <color type="primary" scheme_preference="light">#dc8add</color>
-    <color type="primary" scheme_preference="dark">#9141ac</color>
+    <color type="primary" scheme_preference="light">#f883b1</color>
+    <color type="primary" scheme_preference="dark">#9c174c</color>
   </branding>
   <screenshots>
     <screenshot type="default">
