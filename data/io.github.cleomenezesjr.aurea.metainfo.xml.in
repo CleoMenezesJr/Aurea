@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop">
-	<id>io.github.cleomenezesjr.aurea</id>
-	<metadata_license>CC0-1.0</metadata_license>
-	<project_license>GPL-3.0-or-later</project_license>
+  <id>io.github.cleomenezesjr.aurea</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
   <name>Aurea</name>
-  <summary>A banner previewer for Flatpak metainfo</summary>
-	<description>
-	  <p>Aurea is a simple preview banner made to read metainfo files from Flatpak apps and represent them as they would on Flathub.</p>
-	</description>
+  <summary>Flatpak metainfo banner previewer</summary>
+  <description>
+    <p>
+      Aurea is a simple preview banner made to read metainfo files from Flatpak apps and represent
+      them as they would on Flathub.
+    </p>
+  </description>
   <url type="homepage">https://github.com/CleoMenezesJr/Aurea</url>
   <url type="bugtracker">https://github.com/CleoMenezesJr/Aurea/issues</url>
   <launchable type="desktop-id">io.github.cleomenezesjr.aurea.desktop</launchable>
@@ -26,8 +29,15 @@
       <caption>Aurea Mobile View</caption>
     </screenshot>
   </screenshots>
-  <content_rating type="oars-1.1"/>
+  <content_rating type="oars-1.1" />
   <releases>
+    <release version="1.2" date="2024-05-05">
+      <description translatable="no">
+        <ul>
+          <li>Update branding colors</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.0" date="2024-04-25">
       <description translatable="no">
         <p>First stable release</p>
