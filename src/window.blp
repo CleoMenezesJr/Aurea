@@ -12,9 +12,9 @@ template $AureaWindow : Adw.ApplicationWindow {
 
     setters {
       content_view.halign: fill;
-      screenshot.visible: false;
+      screenshot_clamp.visible: false;
       content_view_dark.halign: fill;
-      screenshot_dark.visible: false;
+      screenshot_clamp_dark.visible: false;
     }
   }
 
@@ -156,7 +156,7 @@ template $AureaWindow : Adw.ApplicationWindow {
                       }
 
                       [overlay]
-                      Adw.Clamp {
+                      Adw.Clamp screenshot_clamp {
                         tightening-threshold: 900;
                         maximum-size: 880;
                         halign: end;
@@ -259,7 +259,7 @@ template $AureaWindow : Adw.ApplicationWindow {
                       }
 
                       [overlay]
-                      Adw.Clamp {
+                      Adw.Clamp screenshot_clamp_dark {
                         tightening-threshold: 900;
                         maximum-size: 880;
                         halign: end;
