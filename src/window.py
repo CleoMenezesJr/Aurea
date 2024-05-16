@@ -46,6 +46,8 @@ class AureaWindow(Adw.ApplicationWindow):
     description_dark: Gtk.Label = Gtk.Template.Child()
     screenshot: Gtk.Picture = Gtk.Template.Child()
     screenshot_dark: Gtk.Picture = Gtk.Template.Child()
+    screenshot_stack: Gtk.Stack = Gtk.Template.Child()
+    screenshot_stack_dark: Gtk.Stack = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -131,10 +133,15 @@ class AureaWindow(Adw.ApplicationWindow):
             self.main_card_dark.add_css_class("main-card-dark")
             self.set_background_card_color(self.branding_colors)
 
+        self.set_loading_screenshot_state(True)
         screenshots_tag: ET.Element = xml_tree.find("screenshots")
         self.screenshot.props.visible = bool(screenshots_tag)
         if not screenshots_tag:
             self.toast_overlay.add_toast(Adw.Toast.new("No screenshot."))
+            self.screenshot_stack.props.visible_child_name = "no_screenshot"
+            self.screenshot_stack_dark.props.visible_child_name = (
+                "no_screenshot"
+            )
         else:
             screenshot_url = screenshots_tag.find("screenshot").find("image")
             self.fetch_screenshot_image_bytes(screenshot_url.text.strip())
@@ -228,6 +235,8 @@ class AureaWindow(Adw.ApplicationWindow):
             GLib.idle_add(self.screenshot.set_paintable, texture)
             GLib.idle_add(self.screenshot_dark.set_paintable, texture)
 
+        self.set_loading_screenshot_state(False)
+
         return None
 
     def fetch_screenshot_image_bytes(self, url: str) -> bytes | str:
@@ -241,6 +250,12 @@ class AureaWindow(Adw.ApplicationWindow):
             if message.get_status() != Soup.Status.OK:
                 self.toast_overlay.add_toast(
                     Adw.Toast.new("Can't load screenshot.")
+                )
+                self.screenshot_stack.props.visible_child_name = (
+                    "no_screenshot"
+                )
+                self.screenshot_stack_dark.props.visible_child_name = (
+                    "no_screenshot"
                 )
                 status_code = message.props.status_code
                 reason_phrase = message.props.reason_phrase
@@ -320,3 +335,12 @@ class AureaWindow(Adw.ApplicationWindow):
             )
 
         return color_scheme
+
+    def set_loading_screenshot_state(self, is_loading: bool = False) -> None:
+        self.screenshot_stack.props.visible_child_name = (
+            "loading_screenshot" if is_loading else "screenshot"
+        )
+        self.screenshot_stack_dark.props.visible_child_name = (
+            "loading_screenshot" if is_loading else "screenshot"
+        )
+        return None
