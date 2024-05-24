@@ -29,7 +29,7 @@ from gi.repository import Adw, Gdk, GdkPixbuf, Gio, GLib, Gtk, Soup
 from PIL import Image
 
 
-@Gtk.Template(resource_path="/io/github/cleomenezesjr/aurea/window.ui")
+@Gtk.Template(resource_path="/io/github/cleomenezesjr/aurea/gtk/window.ui")
 class AureaWindow(Adw.ApplicationWindow):
     __gtype_name__ = "AureaWindow"
 

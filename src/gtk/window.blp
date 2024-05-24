@@ -1,0 +1,429 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $AureaWindow : Adw.ApplicationWindow {
+  default-width: 1424;
+  default-height: 824;
+  width-request: 397;
+  height-request: 434;
+
+  Adw.Breakpoint {
+    condition ("max-width: 1300sp")
+
+    setters {
+      content_view.halign: fill;
+      content_view_dark.halign: fill;
+      screenshot_stack.visible: false;
+      screenshot_stack_dark.visible: false;
+    }
+  }
+
+  content:
+  Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar header_bar {
+      [start]
+      Button open {
+        Adw.ButtonContent {
+          label: _("Open");
+          icon-name: "folder-open-symbolic";
+        }
+        clicked => $open_file_dialog();
+      }
+
+      [title]
+      CenterBox {
+        [center]
+        Adw.WindowTitle window_title {
+          title: _("Banner Preview");
+        }
+      }
+
+      [end]
+      MenuButton {
+        primary: true;
+        icon-name: 'open-menu-symbolic';
+        tooltip-text: _('Menu');
+        menu-model: primary_menu;
+      }
+    }
+    content:
+    Adw.ToastOverlay toast_overlay {
+
+    Overlay {
+        [overlay]
+        Adw.Bin bin {
+          can-focus: false;
+          can-target: false;
+          height-request: 150;
+          styles ["overlay-drag-area-default"]
+        }
+
+        ScrolledWindow scrolled_window {
+          Stack stack {
+            transition-type: crossfade;
+            vhomogeneous: false;
+            valign: fill;
+
+            StackPage {
+              name: "welcome_page";
+              child: Adw.StatusPage status_page {
+                title: _("Open a Metainfo File");
+                description: _("Drop Appstream file here");
+                icon-name: "folder-documents-symbolic";
+                styles ["overlay-drag-area"]
+
+                Button {
+                  label: _("Open…");
+                  halign: center;
+                  clicked => $open_file_dialog();
+
+                  styles [
+                    "pill",
+                    "suggested-action"
+                  ]
+                }
+              }
+
+              ;
+            }
+
+            StackPage {
+              name: "drop_area_page";
+              child: Adw.StatusPage drop_area_status_page {
+                title: _("Drop file to open");
+                icon-name: "list-drag-handle-symbolic";
+
+                styles [
+                  "overlay-drag-area"
+                ]
+              }
+
+              ;
+            }
+
+            StackPage {
+              name: "content_page";
+              child: Grid {
+              valign: fill;
+                Box {
+                  margin-top: 12;
+                  layout {
+                    row: 0;
+                    column: 0;
+                  }
+
+                  Adw.Clamp clamp {
+                    maximum-size: 1400;
+                    tightening-threshold: 2050;
+                    margin-bottom: 12;
+                    height-request: 364;
+                    halign: fill;
+                    valign: center;
+                    margin-start: 12;
+                    margin-end: 12;
+
+                    Box main_card {
+                      hexpand: true;
+                      vexpand: true;
+
+                      Overlay {
+                        halign: fill;
+                        valign: fill;
+                        hexpand: true;
+                        vexpand: true;
+
+                        Adw.Clamp content_view {
+                          maximum-size: 560;
+                          tightening-threshold: 600;
+                          height-request: 318;
+                          halign: start;
+                          valign: fill;
+
+                          Box {
+                            halign: center;
+                            valign: center;
+                            orientation: vertical;
+
+                              Image icon {
+                                icon-name: "application-x-executable-symbolic";
+                                icon-size: normal;
+                                margin-bottom: 12;
+                                halign: center;
+                                valign: end;
+                                pixel-size: 150;
+
+                                styles [
+                                  "icon-dropshadow"
+                                ]
+                              }
+
+                              EditableLabel title {
+                                halign: center;
+                                xalign: 0.50;
+                                text: _("Application Name");
+
+                                styles [
+                                  "title-1"
+                                ]
+                              }
+
+                              EditableLabel description {
+                                margin-top: 6;
+                                halign: center;
+                                xalign: 0.50;
+                                text: _("A nice description for an app");
+
+                                styles [
+                                  "caption"
+                                ]
+                              }
+                          }
+                        }
+
+                        [overlay]
+                        Stack screenshot_stack {
+                          transition-type: crossfade;
+                          StackPage {
+                            name: "screenshot";
+                            child:
+                              Adw.Clamp {
+                                tightening-threshold: 900;
+                                maximum-size: 880;
+                                halign: end;
+                                valign: end;
+
+                                Picture screenshot {
+                                  halign: fill;
+                                  valign: fill;
+                                  vexpand: true;
+                                  can-shrink: true;
+                                  margin-end: 90;
+                                  content-fit: cover;
+                                  visible: true;
+                                }
+                              }
+                              ;
+                          }
+
+                          StackPage {
+                            name: "loading_screenshot";
+                            child:
+                            Adw.Clamp {
+                              tightening-threshold: 900;
+                              maximum-size: 880;
+                              halign: end;
+                              valign: center;
+
+                              Spinner {
+                                spinning: true;
+                                width-request: 32;
+                                height-request: 32;
+                                margin-end: 90;
+                              }
+                            }
+                            ;
+                          }
+
+                          StackPage {
+                            name: "no_screenshot";
+                            child:
+                            Adw.Clamp {
+                              tightening-threshold: 900;
+                              maximum-size: 880;
+                              halign: end;
+                              valign: center;
+
+                              Label {
+                                label: "No Screenshot loaded or defined";
+                              }
+                            }
+                            ;
+                          }
+
+                        }
+                      }
+
+                      styles [
+                        "card",
+                        "background-card",
+                      ]
+                    }
+                   }
+                }
+
+                Box {
+                  layout {
+                    row: 1;
+                    column: 0;
+                  }
+
+                  styles ["window_bg_dark_color"]
+
+                  Adw.Clamp clamp_dark {
+                    maximum-size: 1400;
+                    tightening-threshold: 2050;
+                    height-request: 364;
+                    halign: fill;
+                    valign: center;
+                    margin-start: 12;
+                    margin-end: 12;
+                    margin-bottom: 12;
+                    margin-top: 12;
+
+                    Box main_card_dark {
+                      hexpand: true;
+                      vexpand: true;
+
+                      Overlay {
+                        halign: fill;
+                        valign: fill;
+                        hexpand: true;
+                        vexpand: true;
+
+                        Adw.Clamp content_view_dark {
+                          maximum-size: 560;
+                          tightening-threshold: 600;
+                          height-request: 318;
+                          halign: start;
+                          valign: fill;
+
+                          Box {
+                            halign: center;
+                            valign: center;
+                            orientation: vertical;
+
+                              Image icon_dark {
+                                icon-name: "application-x-executable-symbolic";
+                                icon-size: normal;
+                                margin-bottom: 12;
+                                halign: center;
+                                valign: end;
+                                pixel-size: 150;
+
+                                styles [
+                                  "icon-dropshadow"
+                                ]
+                              }
+
+                              EditableLabel title_dark {
+                                halign: center;
+                                xalign: 0.50;
+                                text: _("Application Name");
+
+                                styles [
+                                  "title-1"
+                                ]
+                              }
+
+                              EditableLabel description_dark {
+                                margin-top: 6;
+                                halign: center;
+                                xalign: 0.50;
+                                text: _("A nice description for an app");
+
+                                styles [
+                                  "caption"
+                                ]
+                              }
+                          }
+                        }
+
+                        [overlay]
+                        Stack screenshot_stack_dark {
+                          transition-type: crossfade;
+                          StackPage {
+                            name: "screenshot";
+                            child:
+                              Adw.Clamp {
+                                tightening-threshold: 900;
+                                maximum-size: 880;
+                                halign: end;
+                                valign: end;
+
+                                Picture screenshot_dark {
+                                  halign: fill;
+                                  valign: fill;
+                                  vexpand: true;
+                                  can-shrink: true;
+                                  margin-end: 90;
+                                  content-fit: cover;
+                                  visible: true;
+                                }
+                              }
+                              ;
+                          }
+
+                          StackPage {
+                            name: "loading_screenshot";
+                            child:
+                            Adw.Clamp {
+                              tightening-threshold: 900;
+                              maximum-size: 880;
+                              halign: end;
+                              valign: center;
+
+                              Spinner {
+                                spinning: true;
+                                width-request: 32;
+                                height-request: 32;
+                                margin-end: 90;
+
+                                styles ["card_fg_dark_color"]
+                              }
+                            }
+                            ;
+                          }
+
+                          StackPage {
+                            name: "no_screenshot";
+                            child:
+                            Adw.Clamp {
+                              tightening-threshold: 900;
+                              maximum-size: 880;
+                              halign: end;
+                              valign: center;
+
+                              Label {
+                                label: "No Screenshot loaded or defined";
+                                styles ["card_fg_dark_color"]
+                              }
+                            }
+                            ;
+                          }
+                          
+                        }
+                      }
+
+                      styles [
+                        "card",
+                        "card_bg_dark_color",
+                      ]
+                    }
+                   }
+                }
+              };
+            }
+          }
+        }
+      }
+    }
+    ;
+  }
+
+  ;
+}
+
+menu primary_menu {
+  section {
+    item {
+      label: _('_Keyboard Shortcuts');
+      action: 'win.show-help-overlay';
+    }
+
+    item {
+      label: _('_About Aurea');
+      action: 'app.about';
+    }
+  }
+}
