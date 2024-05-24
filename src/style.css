@@ -9,3 +9,14 @@
 .card_fg_dark_color {
   color: #ffffff;
 }
+
+.overlay-drag-area-on-enter {
+  background-color: alpha(@accent_color, 0.35);
+}
+
+.overlay-drag-area {
+  box-shadow: none;
+  margin: 12px;
+  border-radius: 12px;
+  transition-duration: 0.5s;
+}

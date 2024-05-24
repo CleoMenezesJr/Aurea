@@ -48,6 +48,7 @@ class AureaWindow(Adw.ApplicationWindow):
     screenshot_dark: Gtk.Picture = Gtk.Template.Child()
     screenshot_stack: Gtk.Stack = Gtk.Template.Child()
     screenshot_stack_dark: Gtk.Stack = Gtk.Template.Child()
+    bin: Adw.Bin = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -61,6 +62,57 @@ class AureaWindow(Adw.ApplicationWindow):
             self.description_dark.get_first_child().get_first_child()
         )
         _description_dark_label.add_css_class("card_fg_dark_color")
+
+        _drop_target: Gtk.DropTarget = Gtk.DropTarget.new(
+            Gio.File, Gdk.DragAction.COPY
+        )
+
+        self.add_controller(_drop_target)
+
+        _drop_target.connect("drop", self.on_file_drop)
+        _drop_target.connect(
+            "enter",
+            lambda target, y, x: self.bin.add_css_class(
+                "overlay-drag-area-on-enter"
+            ),
+        )
+        _drop_target.connect(
+            "leave",
+            lambda target: self.bin.remove_css_class(
+                "overlay-drag-area-on-enter"
+            ),
+        )
+
+    def on_file_drop(
+        self, widget: Gtk.DropTarget, file: Gio.File, x: float, y: float
+    ) -> bool | None:
+        try:
+            if not isinstance(file, Gio.File):
+                raise Exception("Unsupported file")
+
+            content_type: str = file.query_info(
+                "standard::content-type", 0, None
+            ).get_content_type()
+
+            if content_type != "application/xml":
+                raise Exception(
+                    "Unsupported file type. Must be application/xml"
+                )
+
+            info = file.query_info("standard::name", 0, None)
+
+            path: str = file.peek_path()
+            file_name: str = info.get_name()
+            self.handle_file_input(path, file_name)
+        except (GLib.Error, Exception):
+            logging.exception("Could not load file contents")
+            self.toast_overlay.add_toast(
+                Adw.Toast.new("Can't load appstream.")
+            )
+            self.stack.props.visible_child_name = "welcome_page"
+            return None
+
+        return None
 
     @Gtk.Template.Callback()
     def open_file_dialog(self, action: Gtk.Button) -> None:
@@ -90,21 +142,36 @@ class AureaWindow(Adw.ApplicationWindow):
         )
 
         try:
+            content_type: str = file.query_info(
+                "standard::content-type", 0, None
+            ).get_content_type()
+
+            if content_type != "application/xml":
+                raise Exception(
+                    "Unsupported file type. Must be application/xml"
+                )
+
             contents: tuple = file.load_contents_finish(result)
-        except GLib.Error:
+
+            if not contents[0]:
+                self.stack.props.visible_child_name = "welcome_page"
+                raise Exception("File without content")
+
+        except (GLib.Error, Exception):
             logging.exception("Could not load file contents")
-            self.toast_overlay.add_toast(Adw.Toast.new("Can't load appdata."))
+            self.toast_overlay.add_toast(
+                Adw.Toast.new("Can't load appstream.")
+            )
             self.stack.props.visible_child_name = "welcome_page"
             return None
-
-        if not contents[0]:
-            self.stack.props.visible_child_name = "welcome_page"
-            return None
-
-        self.style_manager.props.color_scheme = Adw.ColorScheme.FORCE_LIGHT
 
         path: str = file.peek_path()
         file_name: str = info.get_name()
+        self.handle_file_input(path, file_name)
+
+    def handle_file_input(self, path: str, file_name: str) -> None:
+        self.style_manager.props.color_scheme = Adw.ColorScheme.FORCE_LIGHT
+
         self.window_title.set_subtitle(file_name)
 
         self.get_icon_file_path(
@@ -112,8 +179,7 @@ class AureaWindow(Adw.ApplicationWindow):
             metainfo_file_name=file_name,
         )
 
-        xml_tree: ET = ET.parse(file.get_path())
-
+        xml_tree: ET = ET.parse(path)
         name: ET.Element = xml_tree.find("name")
         self.title.set_text("No name" if name is None else name.text)
         self.title_dark.set_text("No name" if name is None else name.text)
