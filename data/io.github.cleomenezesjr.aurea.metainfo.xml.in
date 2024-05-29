@@ -31,6 +31,17 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="1.3" date="2024-05-29">
+      <description translatable="no">
+        <ul>
+          <li>Ability to drag and drop metainfo file</li>
+          <li>Enable file opening directly from the file manager</li>
+          <li>Indicate loading status or failure to load for screenshots</li>
+          <li>Introduce new screenshot banners</li>
+          <li>Various minor fixes and enhancements</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.2" date="2024-05-05">
       <description translatable="no">
         <ul>
