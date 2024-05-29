@@ -174,6 +174,8 @@ class AureaWindow(Adw.ApplicationWindow):
 
         self.window_title.set_subtitle(file_name)
 
+        self.icon.props.icon_name = "application-x-executable-symbolic"
+        self.icon_dark.props.icon_name = "application-x-executable-symbolic"
         self.get_icon_file_path(
             metainfo_path=path,
             metainfo_file_name=file_name,
@@ -239,10 +241,6 @@ class AureaWindow(Adw.ApplicationWindow):
             # Workaround: If the icon is not found in the current directory,
             # attempt to locate it in the parent directory.
             if not icon_path:
-                self.icon.props.icon_name = "application-x-executable-symbolic"
-                self.icon_dark.props.icon_name = (
-                    "application-x-executable-symbolic"
-                )
                 metainfo_path: str = os.path.dirname(
                     os.path.dirname(metainfo_path)
                 )
@@ -261,10 +259,6 @@ class AureaWindow(Adw.ApplicationWindow):
 
     def set_icon(self, icon_path: str) -> None:
         if not icon_path:
-            self.icon.props.icon_name = "application-x-executable-symbolic"
-            self.icon_dark.props.icon_name = (
-                "application-x-executable-symbolic"
-            )
             self.toast_overlay.add_toast(Adw.Toast.new("No icon found."))
             return None
 
