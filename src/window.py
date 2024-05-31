@@ -329,19 +329,32 @@ class AureaWindow(Adw.ApplicationWindow):
 
     def crop_screenshot_bottom(self, image_bytes: bytes) -> Image.Image:
         image: Image = Image.open(io.BytesIO(image_bytes))
-        width, height = image.size
+        original_width, original_height = image.size
 
         self.screenshot.set_content_fit(
-            Gtk.ContentFit.SCALE_DOWN if width <= 700 else Gtk.ContentFit.COVER
+            Gtk.ContentFit.SCALE_DOWN
+            if original_width <= 700
+            else Gtk.ContentFit.CONTAIN
         )
         self.screenshot_dark.set_content_fit(
-            Gtk.ContentFit.SCALE_DOWN if width <= 700 else Gtk.ContentFit.COVER
+            Gtk.ContentFit.SCALE_DOWN
+            if original_width <= 700
+            else (
+                Gtk.ContentFit.COINTAINWN
+                if original_width <= 700
+                else Gtk.ContentFit.CONTAIN
+            )
         )
-        if width <= 700:
+        if original_width <= 700:
             return image
 
-        crop_height = max(height - 440, 0)
-        cropped_image = image.crop((0, 0, width, height - crop_height))
+        new_width: int = 924
+        new_height = int(new_width / original_width * original_height)
+        resized_image = image.resize((new_width, new_height), Image.LANCZOS)
+
+        box_height: int = 394
+        box = (0, 0, new_width, int(box_height * 0.93))
+        cropped_image = resized_image.crop(box)
 
         return cropped_image
 
