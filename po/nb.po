@@ -1,0 +1,78 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-06-24 00:28+0200\n"
+"PO-Revision-Date: 2024-06-24 00:35+0200\n"
+"Last-Translator: Brage <bragefuglseth@gnome.org>\n"
+"Language-Team: \n"
+"Language: nb\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.4\n"
+
+#: data/io.github.cleomenezesjr.aurea.desktop.in:3
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:6
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:25
+msgid "Aurea"
+msgstr "Aurea"
+
+#: data/io.github.cleomenezesjr.aurea.desktop.in:4
+msgid "A banner previewer for Flatpak metainfo files"
+msgstr "Forhåndsvis appbannere"
+
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:7
+msgid "Flatpak metainfo banner previewer"
+msgstr "Forhåndsvis appbannere"
+
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:9
+msgid ""
+"Aurea is a simple preview banner made to read metainfo files from Flatpak "
+"apps and represent them as they would on Flathub."
+msgstr ""
+"Sørg for at appen din vises fra sin beste side! Aurea lar deg se hvordan "
+"et potensielt banner med appens profileringsfarger, skjermbilde og "
+"appikon vil ta seg ut på et nettsted eller i et appsenter."
+
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:29
+msgid "Aurea adaptive"
+msgstr "Tilpassing til skjermstørrelse"
+
+#: src/gtk/window.blp:28
+msgid "Open"
+msgstr "Åpne"
+
+#: src/gtk/window.blp:38
+msgid "Banner Preview"
+msgstr "Appbanner"
+
+#: src/gtk/window.blp:71
+msgid "Open a Metainfo File"
+msgstr "Forhåndsvis appbannere"
+
+#: src/gtk/window.blp:72
+msgid "Drop Appstream file here"
+msgstr "Åpne en metadatafil, eller dra og slipp en her"
+
+#: src/gtk/window.blp:77
+msgid "Open…"
+msgstr "Åpne…"
+
+#: src/gtk/window.blp:94
+msgid "Drop file to open"
+msgstr "Slipp for å åpne"
+
+#: src/gtk/window.blp:164 src/gtk/window.blp:312
+msgid "Application Name"
+msgstr "Appnavn"
+
+#: src/gtk/window.blp:175 src/gtk/window.blp:323
+msgid "A nice description for an app"
+msgstr "Et kort sammendrag"
