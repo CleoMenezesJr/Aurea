@@ -3,4 +3,4 @@ data/io.github.cleomenezesjr.aurea.metainfo.xml.in
 data/io.github.cleomenezesjr.aurea.gschema.xml
 src/main.py
 src/window.py
-src/window.ui
+src/gtk/window.blp
