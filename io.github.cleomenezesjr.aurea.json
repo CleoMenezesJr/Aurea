@@ -1,7 +1,7 @@
 {
   "app-id": "io.github.cleomenezesjr.aurea",
   "runtime": "org.gnome.Platform",
-  "runtime-version": "46",
+  "runtime-version": "master",
   "sdk": "org.gnome.Sdk",
   "command": "aurea",
   "finish-args": [
@@ -34,7 +34,7 @@
         {
           "type": "git",
           "url": "https://gitlab.gnome.org/jwestman/blueprint-compiler",
-          "tag": "v0.10.0"
+          "tag": "v0.14.0"
         }
       ]
     },
