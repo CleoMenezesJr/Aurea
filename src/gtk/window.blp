@@ -417,6 +417,11 @@ template $AureaWindow : Adw.ApplicationWindow {
 menu primary_menu {
   section {
     item {
+      label: _('_Reload');
+      action: 'app.reload';
+    }
+
+    item {
       label: _('_Keyboard Shortcuts');
       action: 'win.show-help-overlay';
     }

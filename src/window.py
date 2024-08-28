@@ -83,6 +83,12 @@ class AureaWindow(Adw.ApplicationWindow):
             ),
         )
 
+        self.loaded_file: Gio.File = None
+
+        self.reload_action = Gio.SimpleAction.new("reload", None)
+        self.reload_action.connect("activate", lambda *_: self.refresh_data())
+        self.get_application().set_accels_for_action("app.reload", ["F5"])
+
     def on_file_drop(
         self, widget: Gtk.DropTarget, file: Gio.File, x: float, y: float
     ) -> bool | None:
@@ -110,6 +116,7 @@ class AureaWindow(Adw.ApplicationWindow):
                 Adw.Toast.new("Can't load appstream.")
             )
             self.stack.props.visible_child_name = "welcome_page"
+            self.get_application().remove_action("reload")
             return None
 
         return None
@@ -131,6 +138,8 @@ class AureaWindow(Adw.ApplicationWindow):
 
         def open_file(file) -> Gio.File:
             return file.load_contents_async(None, self.open_file_complete)
+
+        self.loaded_file = file
 
         return open_file(file)
 
@@ -155,6 +164,7 @@ class AureaWindow(Adw.ApplicationWindow):
 
             if not contents[0]:
                 self.stack.props.visible_child_name = "welcome_page"
+                self.get_application().remove_action("reload")
                 raise Exception("File without content")
 
         except (GLib.Error, Exception):
@@ -163,6 +173,7 @@ class AureaWindow(Adw.ApplicationWindow):
                 Adw.Toast.new("Can't load appstream.")
             )
             self.stack.props.visible_child_name = "welcome_page"
+            self.get_application().remove_action("reload")
             return None
 
         path: str = file.peek_path()
@@ -170,6 +181,7 @@ class AureaWindow(Adw.ApplicationWindow):
         self.handle_file_input(path, file_name)
 
     def handle_file_input(self, path: str, file_name: str) -> None:
+        self.get_application().add_action(self.reload_action)
         self.style_manager.props.color_scheme = Adw.ColorScheme.FORCE_LIGHT
 
         self.window_title.set_subtitle(file_name)
@@ -417,3 +429,9 @@ class AureaWindow(Adw.ApplicationWindow):
             "loading_screenshot" if is_loading else "screenshot"
         )
         return None
+
+    def refresh_data(self) -> None:
+        if not self.loaded_file:
+            return None
+
+        self.loaded_file.load_contents_async(None, self.open_file_complete)
