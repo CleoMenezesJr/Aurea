@@ -84,6 +84,7 @@ class AureaWindow(Adw.ApplicationWindow):
         )
 
         self.loaded_file: Gio.File = None
+        self.monitor_for_file: Gio.FileMonitor = None
 
         self.reload_action = Gio.SimpleAction.new("reload", None)
         self.reload_action.connect("activate", lambda *_: self.refresh_data())
@@ -109,6 +110,13 @@ class AureaWindow(Adw.ApplicationWindow):
 
             path: str = file.peek_path()
             file_name: str = info.get_name()
+
+            self.loaded_file = file
+            self.monitor_for_file = self.loaded_file.monitor_file(
+                Gio.FileMonitorFlags.SEND_MOVED, None
+            )
+            self.monitor_for_file.connect("changed", self.on_file_changed)
+
             self.handle_file_input(path, file_name)
         except (GLib.Error, Exception):
             logging.exception("Could not load file contents")
@@ -140,6 +148,10 @@ class AureaWindow(Adw.ApplicationWindow):
             return file.load_contents_async(None, self.open_file_complete)
 
         self.loaded_file = file
+        self.monitor_for_file = self.loaded_file.monitor_file(
+            Gio.FileMonitorFlags.SEND_MOVED, None
+        )
+        self.monitor_for_file.connect("changed", self.on_file_changed)
 
         return open_file(file)
 
@@ -435,3 +447,19 @@ class AureaWindow(Adw.ApplicationWindow):
             return None
 
         self.loaded_file.load_contents_async(None, self.open_file_complete)
+        self.toast_overlay.add_toast(
+            Adw.Toast(title="Banner reloaded.", timeout=2)
+        )
+
+    def on_file_changed(
+        self,
+        monitor: Gio.FileMonitor,
+        file: Gio.File,
+        other_file: Gio.File,
+        event: Gio.FileMonitorEvent,
+    ) -> None:
+
+        if event != Gio.FileMonitorEvent.CHANGES_DONE_HINT:
+            return None
+
+        self.refresh_data()
