@@ -63,8 +63,9 @@ class AureaWindow(Adw.ApplicationWindow):
         )
         _description_dark_label.add_css_class("card_fg_dark_color")
 
-        _drop_target: Gtk.DropTarget = Gtk.DropTarget.new(
-            Gio.File, Gdk.DragAction.COPY
+        _drop_target_content = Gdk.ContentFormats.new_for_gtype(Gio.File)
+        _drop_target: Gtk.DropTarget = Gtk.DropTarget(
+            formats=_drop_target_content, actions=Gdk.DragAction.COPY
         )
 
         self.add_controller(_drop_target)
@@ -86,7 +87,9 @@ class AureaWindow(Adw.ApplicationWindow):
         self.loaded_file: Gio.File = None
         self.monitor_for_file: Gio.FileMonitor = None
 
-        self.reload_action = Gio.SimpleAction.new("reload", None)
+        self.reload_action = Gio.SimpleAction(
+            name="reload", parameter_type=None
+        )
         self.reload_action.connect("activate", lambda *_: self.refresh_data())
         self.get_application().set_accels_for_action("app.reload", ["F5"])
 
@@ -121,7 +124,7 @@ class AureaWindow(Adw.ApplicationWindow):
         except (GLib.Error, Exception):
             logging.exception("Could not load file contents")
             self.toast_overlay.add_toast(
-                Adw.Toast.new("Can't load appstream.")
+                Adw.Toast(title="Can't load appstream.")
             )
             self.stack.props.visible_child_name = "welcome_page"
             self.get_application().remove_action("reload")
@@ -182,7 +185,7 @@ class AureaWindow(Adw.ApplicationWindow):
         except (GLib.Error, Exception):
             logging.exception("Could not load file contents")
             self.toast_overlay.add_toast(
-                Adw.Toast.new("Can't load appstream.")
+                Adw.Toast(title="Can't load appstream.")
             )
             self.stack.props.visible_child_name = "welcome_page"
             self.get_application().remove_action("reload")
@@ -229,7 +232,7 @@ class AureaWindow(Adw.ApplicationWindow):
         screenshots_tag: ET.Element = xml_tree.find("screenshots")
         self.screenshot.props.visible = bool(screenshots_tag)
         if not screenshots_tag:
-            self.toast_overlay.add_toast(Adw.Toast.new("No screenshot."))
+            self.toast_overlay.add_toast(Adw.Toast(title="No screenshot."))
             self.screenshot_stack.props.visible_child_name = "no_screenshot"
             self.screenshot_stack_dark.props.visible_child_name = (
                 "no_screenshot"
@@ -283,7 +286,7 @@ class AureaWindow(Adw.ApplicationWindow):
 
     def set_icon(self, icon_path: str) -> None:
         if not icon_path:
-            self.toast_overlay.add_toast(Adw.Toast.new("No icon found."))
+            self.toast_overlay.add_toast(Adw.Toast(title="No icon found."))
             return None
 
         try:
@@ -311,7 +314,7 @@ class AureaWindow(Adw.ApplicationWindow):
         image_array = buf.getbuffer()
         try:
             texture = Gdk.Texture.new_from_bytes(
-                GLib.Bytes.new(image_array),
+                GLib.Bytes(image_array),
             )
         except GLib.Error:
             logging.exception("Could not read texture from bytes")
@@ -333,7 +336,7 @@ class AureaWindow(Adw.ApplicationWindow):
             bytes = session.send_and_read_finish(result)
             if message.get_status() != Soup.Status.OK:
                 self.toast_overlay.add_toast(
-                    Adw.Toast.new("Can't load screenshot.")
+                    Adw.Toast(title="Can't load screenshot.")
                 )
                 self.screenshot_stack.props.visible_child_name = (
                     "no_screenshot"
@@ -399,7 +402,9 @@ class AureaWindow(Adw.ApplicationWindow):
     def get_branding_colors(self, xml_tree: ET) -> dict | None:
         branding = xml_tree.find("./branding")
         if branding is None:
-            self.toast_overlay.add_toast(Adw.Toast.new("No branding colors."))
+            self.toast_overlay.add_toast(
+                Adw.Toast(title="No branding colors.")
+            )
             return None
 
         dark_color = branding.find('./color[@scheme_preference="dark"]')
@@ -407,8 +412,8 @@ class AureaWindow(Adw.ApplicationWindow):
 
         if light_color is None and dark_color is None:
             self.toast_overlay.add_toast(
-                Adw.Toast.new(
-                    "Light and dark brand color have not been defined."
+                Adw.Toast(
+                    title="Light and dark brand color have not been defined."
                 )
             )
             return None
@@ -422,13 +427,13 @@ class AureaWindow(Adw.ApplicationWindow):
             color_scheme["light"] = light_color.text
         else:
             self.toast_overlay.add_toast(
-                Adw.Toast.new("Light brand color have not been defined.")
+                Adw.Toast(title="Light brand color have not been defined.")
             )
         if dark_color is not None:
             color_scheme["dark"] = dark_color.text
         else:
             self.toast_overlay.add_toast(
-                Adw.Toast.new("Dark brand color have not been defined.")
+                Adw.Toast(title="Dark brand color have not been defined.")
             )
 
         return color_scheme
