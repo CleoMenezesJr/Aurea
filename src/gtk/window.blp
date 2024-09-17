@@ -215,12 +215,7 @@ template $AureaWindow : Adw.ApplicationWindow {
                               halign: end;
                               valign: center;
 
-                              Spinner {
-                                spinning: true;
-                                width-request: 32;
-                                height-request: 32;
-                                margin-end: 90;
-                              }
+                              Adw.Spinner { height-request: 42; }
                             }
                             ;
                           }
@@ -363,11 +358,8 @@ template $AureaWindow : Adw.ApplicationWindow {
                               halign: end;
                               valign: center;
 
-                              Spinner {
-                                spinning: true;
-                                width-request: 32;
-                                height-request: 32;
-                                margin-end: 90;
+                              Adw.Spinner {
+                                height-request: 42;
 
                                 styles ["card_fg_dark_color"]
                               }
