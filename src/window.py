@@ -462,7 +462,7 @@ class AureaWindow(Adw.ApplicationWindow):
         event: Gio.FileMonitorEvent,
     ) -> None:
 
-        if event != Gio.FileMonitorEvent.CHANGES_DONE_HINT:
+        if event != Gio.FileMonitorEvent.MOVED:
             return None
 
         self.refresh_data()
