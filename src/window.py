@@ -137,9 +137,9 @@ class AureaWindow(Adw.ApplicationWindow):
         filter: Gtk.FileFilter = Gtk.FileFilter()
         filter.add_mime_type("application/xml")
         dialog = Gtk.FileDialog(default_filter=filter)
-        dialog.open(self, None, self.on_file_opened)
+        dialog.open(self, None, self.on_file_selected)
 
-    def on_file_opened(
+    def on_file_selected(
         self, dialog: Gtk.FileDialog, result: Gio.Task
     ) -> None | GLib.GError:
         try:
