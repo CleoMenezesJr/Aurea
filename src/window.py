@@ -114,12 +114,7 @@ class AureaWindow(Adw.ApplicationWindow):
             path: str = file.peek_path()
             file_name: str = info.get_name()
 
-            self.loaded_file = file
-            self.monitor_for_file = self.loaded_file.monitor_file(
-                Gio.FileMonitorFlags.SEND_MOVED, None
-            )
-            self.monitor_for_file.connect("changed", self.on_file_changed)
-
+            self.setup_monitor_for_file(file)
             self.handle_file_input(path, file_name)
         except (GLib.Error, Exception):
             logging.exception("Could not load file contents")
@@ -150,11 +145,7 @@ class AureaWindow(Adw.ApplicationWindow):
         def open_file(file) -> Gio.File:
             return file.load_contents_async(None, self.open_file_complete)
 
-        self.loaded_file = file
-        self.monitor_for_file = self.loaded_file.monitor_file(
-            Gio.FileMonitorFlags.SEND_MOVED, None
-        )
-        self.monitor_for_file.connect("changed", self.on_file_changed)
+        self.setup_monitor_for_file(file)
 
         return open_file(file)
 
@@ -455,6 +446,13 @@ class AureaWindow(Adw.ApplicationWindow):
         self.toast_overlay.add_toast(
             Adw.Toast(title="Banner reloaded.", timeout=2)
         )
+
+    def setup_monitor_for_file(self, file: Gio.File) -> None:
+        self.loaded_file = file
+        self.monitor_for_file = self.loaded_file.monitor_file(
+            Gio.FileMonitorFlags.SEND_MOVED, None
+        )
+        self.monitor_for_file.connect("changed", self.on_file_changed)
 
     def on_file_changed(
         self,
