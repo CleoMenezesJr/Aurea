@@ -19,6 +19,14 @@
     <color type="primary" scheme_preference="light">#f883b1</color>
     <color type="primary" scheme_preference="dark">#9c174c</color>
   </branding>
+  <recommends>
+    <control>keyboard</control>
+    <control>pointing</control>
+    <control>touch</control>
+  </recommends>
+  <requires>
+    <display_length compare="ge">300</display_length>
+  </requires>
   <screenshots>
     <screenshot type="default">
       <image>https://raw.githubusercontent.com/CleoMenezesJr/Aurea/main/data/screenshots/1.png</image>
