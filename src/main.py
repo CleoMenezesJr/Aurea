@@ -72,7 +72,7 @@ class AureaApplication(Adw.Application):
             application_icon="io.github.cleomenezesjr.aurea",
             comments="A banner previewer for Flatpak metainfo files",
             developer_name="Cleo Menezes Jr.",
-            version="1.4",
+            version="1.5",
             developers=["Cleo Menezes Jr. https://github.com/CleoMenezesJr"],
             copyright="© 2024 Cleo Menezes Jr.",
             support_url="https://matrix.to/#/%23aurea-app:matrix.org",

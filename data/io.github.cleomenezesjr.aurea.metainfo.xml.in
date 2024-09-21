@@ -39,6 +39,18 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="1.5" date="2024-09-21">
+      <description translatable="no">
+        <ul>
+          <li>GNOME 47 support</li>
+          <li>Hot reload banner when metainfo is edited</li>
+          <li>Open metainfo file using Aurea</li>
+          <li>Reload banner using &lt;F5&gt;</li>
+          <li>Add Norwegian translations</li>
+          <li>Update Blueprint 0.14.0</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.4" date="2024-05-31">
       <description translatable="no">
         <ul>
