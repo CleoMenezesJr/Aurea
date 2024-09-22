@@ -1,0 +1,166 @@
+# Brazilian Portuguese translation for aurea.
+# Copyright (C) 2024 THE aurea's COPYRIGHT HOLDER
+# This file is distributed under the same license as the aurea package.
+# Rafael Fontenelle <rafaelff@gnome.org>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: aurea\n"
+"Report-Msgid-Bugs-To: https://github.com/CleoMenezesJr/Aurea/issues\n"
+"POT-Creation-Date: 2024-09-22 18:18+0200\n"
+"PO-Revision-Date: 2024-09-22 20:02+0200\n"
+"Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
+"Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Gtranslator 46.1\n"
+
+#: data/io.github.cleomenezesjr.aurea.desktop.in:3
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:6
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:33
+msgid "Aurea"
+msgstr "Áurea"
+
+#: data/io.github.cleomenezesjr.aurea.desktop.in:4
+msgid "A banner previewer for Flatpak metainfo files"
+msgstr "Um pré-visualizador do banner para arquivos de metainfo do Flatpak"
+
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:7
+msgid "Flatpak metainfo banner previewer"
+msgstr "Pré-visualizador do banner de metainfo do Flatpak"
+
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:9
+msgid ""
+"Aurea is a simple preview banner made to read metainfo files from Flatpak "
+"apps and represent them as they would on Flathub."
+msgstr ""
+"Áurea premite pré-visualizar de forma simples o banner feito para ler "
+"arquivos metainfo de aplicativos Flatpak e representá-los como fariam no "
+"Flathub."
+
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:17
+msgid "Cleo Menezes Jr."
+msgstr "Cleo Menezes Jr."
+
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:37
+msgid "Aurea adaptive"
+msgstr "Áurea adaptável"
+
+#: src/main.py:75
+msgid "A banner previewer for Flatpak metainfo files."
+msgstr "Um pré-visualizador de banner para arquivos metainfo do Flatpak."
+
+#: src/main.py:79
+msgid "translator-credits"
+msgstr "Rafael Fontenelle <rafaelff@gnome.org>"
+
+#: src/window.py:123 src/window.py:180
+msgid "Can't load appstream"
+msgstr "Não foi possível carregar o appstream"
+
+#: src/window.py:227
+msgid "No screenshot"
+msgstr "Nenhuma captura de tela"
+
+#: src/window.py:281
+msgid "No icon found"
+msgstr "Nenhum icone encontrado"
+
+#: src/window.py:331
+msgid "Can't load screenshot"
+msgstr "Não foi possível carregar a captura de tela"
+
+#: src/window.py:398
+msgid "No branding colors."
+msgstr "Sem cor de marca."
+
+#: src/window.py:408
+msgid "Light and dark brand color have not been defined"
+msgstr "Cores de marca clara e escura não foram definidas"
+
+#: src/window.py:422
+msgid "Light brand color have not been defined"
+msgstr "Cor de marca clara não foi definida"
+
+#: src/window.py:428
+msgid "Dark brand color have not been defined"
+msgstr "Cor de marca escura não foi definida"
+
+#: src/window.py:448
+msgid "Banner reloaded"
+msgstr "Banner recarregado"
+
+#: src/gtk/window.blp:28
+msgid "Open"
+msgstr "Abrir"
+
+#: src/gtk/window.blp:38
+msgid "Banner Preview"
+msgstr "Visualização de banner"
+
+#: src/gtk/window.blp:46
+msgid "Main Menu"
+msgstr "Menu principal"
+
+#: src/gtk/window.blp:71
+msgid "Open a Metainfo File"
+msgstr "Abra um arquivo Metainfo"
+
+#: src/gtk/window.blp:72
+msgid "Drop Appstream file here"
+msgstr "Solte um arquivo Appstream aqui"
+
+#: src/gtk/window.blp:77
+msgid "Open…"
+msgstr "Abrir…"
+
+#: src/gtk/window.blp:94
+msgid "Drop file to open"
+msgstr "Solte um arquivo para abrir"
+
+#: src/gtk/window.blp:164 src/gtk/window.blp:307
+msgid "Application Name"
+msgstr "Nome do aplicativo"
+
+#: src/gtk/window.blp:175 src/gtk/window.blp:318
+msgid "A nice description for an app"
+msgstr "Uma descrição legal para um aplicativo"
+
+#: src/gtk/window.blp:233 src/gtk/window.blp:380
+msgid "No Screenshot loaded or defined"
+msgstr "Sem captura de tela carregada ou definida"
+
+#: src/gtk/window.blp:412
+msgid "_Reload"
+msgstr "_Recarregar"
+
+#: src/gtk/window.blp:417
+msgid "_Keyboard Shortcuts"
+msgstr "Atalhos de _teclado"
+
+#: src/gtk/window.blp:422
+msgid "_About Aurea"
+msgstr "_Sobre Áurea"
+
+#: src/gtk/help-overlay.ui:11
+msgctxt "shortcut window"
+msgid "General"
+msgstr "Geral"
+
+#: src/gtk/help-overlay.ui:14
+msgctxt "shortcut window"
+msgid "Reload"
+msgstr "Recarrega"
+
+#: src/gtk/help-overlay.ui:20
+msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr "Mostra os atalhos de teclado"
+
+#: src/gtk/help-overlay.ui:26
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Sai"
