@@ -42,8 +42,8 @@ template $AureaWindow : Adw.ApplicationWindow {
       [end]
       MenuButton {
         primary: true;
-        icon-name: 'open-menu-symbolic';
-        tooltip-text: _('Menu');
+        icon-name: "open-menu-symbolic";
+        tooltip-text: _("Main Menu");
         menu-model: primary_menu;
       }
     }
@@ -230,7 +230,7 @@ template $AureaWindow : Adw.ApplicationWindow {
                               valign: center;
 
                               Label {
-                                label: "No Screenshot loaded or defined";
+                                label: _("No Screenshot loaded or defined");
                               }
                             }
                             ;
@@ -377,7 +377,7 @@ template $AureaWindow : Adw.ApplicationWindow {
                               valign: center;
 
                               Label {
-                                label: "No Screenshot loaded or defined";
+                                label: _("No Screenshot loaded or defined");
                                 styles ["card_fg_dark_color"]
                               }
                             }
@@ -409,18 +409,18 @@ template $AureaWindow : Adw.ApplicationWindow {
 menu primary_menu {
   section {
     item {
-      label: _('_Reload');
-      action: 'app.reload';
+      label: _("_Reload");
+      action: "app.reload";
     }
 
     item {
-      label: _('_Keyboard Shortcuts');
-      action: 'win.show-help-overlay';
+      label: _("_Keyboard Shortcuts");
+      action: "win.show-help-overlay";
     }
 
     item {
-      label: _('_About Aurea');
-      action: 'app.about';
+      label: _("_About Aurea");
+      action: "app.about";
     }
   }
 }
