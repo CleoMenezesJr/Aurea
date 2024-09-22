@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-22 18:08+0200\n"
-"PO-Revision-Date: 2024-09-22 18:09+0200\n"
+"POT-Creation-Date: 2024-09-22 18:18+0200\n"
+"PO-Revision-Date: 2024-09-22 18:19+0200\n"
 "Last-Translator: Brage <bragefuglseth@gnome.org>\n"
 "Language-Team: \n"
 "Language: nb\n"
@@ -59,6 +59,42 @@ msgstr ""
 #: src/main.py:79
 msgid "translator-credits"
 msgstr "Brage Fuglseth https://bragefuglseth.dev"
+
+#: src/window.py:123 src/window.py:180
+msgid "Can't load appstream"
+msgstr "Innlasting av Appstream mislyktes"
+
+#: src/window.py:227
+msgid "No screenshot"
+msgstr "Fant ikke skjermbilder"
+
+#: src/window.py:281
+msgid "No icon found"
+msgstr "Fant ikke ikon"
+
+#: src/window.py:331
+msgid "Can't load screenshot"
+msgstr "Innlasting av skjermbilder mislyktes"
+
+#: src/window.py:398
+msgid "No branding colors."
+msgstr "Ingen merkefarger"
+
+#: src/window.py:408
+msgid "Light and dark brand color have not been defined"
+msgstr "Ingen lys eller mørk merkefarge"
+
+#: src/window.py:422
+msgid "Light brand color have not been defined"
+msgstr "Ingen lys merkefarge"
+
+#: src/window.py:428
+msgid "Dark brand color have not been defined"
+msgstr "Ingen mørk merkefarge"
+
+#: src/window.py:448
+msgid "Banner reloaded"
+msgstr "Lastet inn på nytt"
 
 #: src/gtk/window.blp:28
 msgid "Open"
