@@ -37,12 +37,16 @@ class AureaApplication(Adw.Application):
     def __init__(self):
         super().__init__(
             application_id="io.github.cleomenezesjr.aurea",
-            flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
+            flags=Gio.ApplicationFlags.HANDLES_OPEN,
         )
         self.create_action("quit", lambda *_: self.quit(), ["<primary>q"])
         self.create_action("about", self.on_about_action)
 
-    def do_activate(self):
+    def do_open(self, files: list[Gio.File], _n_files: int, hint: str) -> None:
+        for file in files:
+            self.do_activate(file)
+
+    def do_activate(self, file=None):
         """Called when the application is activated.
 
         We raise the application's main window, creating it if
@@ -53,6 +57,14 @@ class AureaApplication(Adw.Application):
             win = AureaWindow(application=self)
         win.present()
 
+        if file:
+            file_info = file.query_info("standard::name", 0, None)
+            win.handle_file_input(
+                path=file.peek_path(),
+                file_name=file_info.get_name()
+            )
+            win.setup_monitor_for_file(file)
+
     def on_about_action(self, widget, _):
         """Callback for the app.about action."""
         about = Adw.AboutDialog(
@@ -60,7 +72,7 @@ class AureaApplication(Adw.Application):
             application_icon="io.github.cleomenezesjr.aurea",
             comments="A banner previewer for Flatpak metainfo files",
             developer_name="Cleo Menezes Jr.",
-            version="1.4",
+            version="1.5",
             developers=["Cleo Menezes Jr. https://github.com/CleoMenezesJr"],
             copyright="© 2024 Cleo Menezes Jr.",
             support_url="https://matrix.to/#/%23aurea-app:matrix.org",
