@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 SPDX-License-Identifier: GPL-3.0-or-later
 """
 
+from gettext import gettext
 import io
 import logging
 import os
@@ -119,7 +120,7 @@ class AureaWindow(Adw.ApplicationWindow):
         except (GLib.Error, Exception):
             logging.exception("Could not load file contents")
             self.toast_overlay.add_toast(
-                Adw.Toast(title="Can't load appstream.")
+                Adw.Toast(title=gettext("Can't load appstream"))
             )
             self.stack.props.visible_child_name = "welcome_page"
             self.get_application().remove_action("reload")
@@ -176,7 +177,7 @@ class AureaWindow(Adw.ApplicationWindow):
         except (GLib.Error, Exception):
             logging.exception("Could not load file contents")
             self.toast_overlay.add_toast(
-                Adw.Toast(title="Can't load appstream.")
+                Adw.Toast(title=gettext("Can't load appstream"))
             )
             self.stack.props.visible_child_name = "welcome_page"
             self.get_application().remove_action("reload")
@@ -223,7 +224,7 @@ class AureaWindow(Adw.ApplicationWindow):
         screenshots_tag: ET.Element = xml_tree.find("screenshots")
         self.screenshot.props.visible = bool(screenshots_tag)
         if not screenshots_tag:
-            self.toast_overlay.add_toast(Adw.Toast(title="No screenshot."))
+            self.toast_overlay.add_toast(Adw.Toast(title=gettext("No screenshot")))
             self.screenshot_stack.props.visible_child_name = "no_screenshot"
             self.screenshot_stack_dark.props.visible_child_name = (
                 "no_screenshot"
@@ -277,7 +278,7 @@ class AureaWindow(Adw.ApplicationWindow):
 
     def set_icon(self, icon_path: str) -> None:
         if not icon_path:
-            self.toast_overlay.add_toast(Adw.Toast(title="No icon found."))
+            self.toast_overlay.add_toast(Adw.Toast(title=gettext("No icon found")))
             return None
 
         try:
@@ -327,7 +328,7 @@ class AureaWindow(Adw.ApplicationWindow):
             bytes = session.send_and_read_finish(result)
             if message.get_status() != Soup.Status.OK:
                 self.toast_overlay.add_toast(
-                    Adw.Toast(title="Can't load screenshot.")
+                    Adw.Toast(title=gettext("Can't load screenshot"))
                 )
                 self.screenshot_stack.props.visible_child_name = (
                     "no_screenshot"
@@ -394,7 +395,7 @@ class AureaWindow(Adw.ApplicationWindow):
         branding = xml_tree.find("./branding")
         if branding is None:
             self.toast_overlay.add_toast(
-                Adw.Toast(title="No branding colors.")
+                Adw.Toast(title=gettext("No branding colors."))
             )
             return None
 
@@ -404,7 +405,7 @@ class AureaWindow(Adw.ApplicationWindow):
         if light_color is None and dark_color is None:
             self.toast_overlay.add_toast(
                 Adw.Toast(
-                    title="Light and dark brand color have not been defined."
+                    title=gettext("Light and dark brand color have not been defined")
                 )
             )
             return None
@@ -418,13 +419,13 @@ class AureaWindow(Adw.ApplicationWindow):
             color_scheme["light"] = light_color.text
         else:
             self.toast_overlay.add_toast(
-                Adw.Toast(title="Light brand color have not been defined.")
+                Adw.Toast(title=gettext("Light brand color have not been defined"))
             )
         if dark_color is not None:
             color_scheme["dark"] = dark_color.text
         else:
             self.toast_overlay.add_toast(
-                Adw.Toast(title="Dark brand color have not been defined.")
+                Adw.Toast(title=gettext("Dark brand color have not been defined"))
             )
 
         return color_scheme
@@ -444,7 +445,7 @@ class AureaWindow(Adw.ApplicationWindow):
 
         self.loaded_file.load_contents_async(None, self.open_file_complete)
         self.toast_overlay.add_toast(
-            Adw.Toast(title="Banner reloaded.", timeout=2)
+            Adw.Toast(title=gettext("Banner reloaded"), timeout=2)
         )
 
     def setup_monitor_for_file(self, file: Gio.File) -> None:
