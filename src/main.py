@@ -23,6 +23,8 @@ import sys
 
 import gi
 
+from gettext import gettext
+
 gi.require_versions({"Gtk": "4.0", "Soup": "3.0", "Adw": "1"})
 
 if gi:
@@ -70,10 +72,11 @@ class AureaApplication(Adw.Application):
         about = Adw.AboutDialog(
             application_name="Aurea",
             application_icon="io.github.cleomenezesjr.aurea",
-            comments="A banner previewer for Flatpak metainfo files",
+            comments=gettext("A banner previewer for Flatpak metainfo files."),
             developer_name="Cleo Menezes Jr.",
             version="1.5",
             developers=["Cleo Menezes Jr. https://github.com/CleoMenezesJr"],
+            translator_credits=gettext("translator-credits"),
             copyright="© 2024 Cleo Menezes Jr.",
             support_url="https://matrix.to/#/%23aurea-app:matrix.org",
             issue_url="https://github.com/CleoMenezesJr/Aurea/issues/new",

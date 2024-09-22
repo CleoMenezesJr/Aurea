@@ -4,3 +4,4 @@ data/io.github.cleomenezesjr.aurea.gschema.xml
 src/main.py
 src/window.py
 src/gtk/window.blp
+src/gtk/help-overlay.ui
