@@ -37,7 +37,7 @@ msgid ""
 "Aurea is a simple preview banner made to read metainfo files from Flatpak "
 "apps and represent them as they would on Flathub."
 msgstr ""
-"Áurea premite pré-visualizar de forma simples o banner feito para ler "
+"Áurea permite pré-visualizar de forma simples o banner feito para ler "
 "arquivos metainfo de aplicativos Flatpak e representá-los como fariam no "
 "Flathub."
 
@@ -67,7 +67,7 @@ msgstr "Nenhuma captura de tela"
 
 #: src/window.py:281
 msgid "No icon found"
-msgstr "Nenhum icone encontrado"
+msgstr "Nenhum ícone encontrado"
 
 #: src/window.py:331
 msgid "Can't load screenshot"
