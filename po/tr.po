@@ -1,0 +1,163 @@
+# Turkish translation for io.github.cleomenezesjr.aurea.
+# Copyright (C) 2025 io.github.cleomenezesjr.aurea's COPYRIGHT HOLDER
+# This file is distributed under the same license as the io.github.cleomenezesjr.aurea package.
+#
+# Sabri Ünal <yakushabb@gmail.com>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: io.github.cleomenezesjr.aurea\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-02 19:49+0300\n"
+"PO-Revision-Date: 2025-01-02 19:53+0300\n"
+"Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
+"Language-Team: Turkish <takim@gnome.org.tr>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.4.3\n"
+
+#: data/io.github.cleomenezesjr.aurea.desktop.in:3
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:6
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:33
+msgid "Aurea"
+msgstr "Aurea"
+
+#: data/io.github.cleomenezesjr.aurea.desktop.in:4
+msgid "A banner previewer for Flatpak metainfo files"
+msgstr "Flatpak metainfo dosyaları için banner ön izleyici"
+
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:7
+msgid "Flatpak metainfo banner previewer"
+msgstr "Flatpak metainfo banner ön izleyici"
+
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:9
+msgid ""
+"Aurea is a simple preview banner made to read metainfo files from Flatpak "
+"apps and represent them as they would on Flathub."
+msgstr ""
+"Aurea, Flatpak uygulamalarından metainfo dosyalarını okumak ve bunları "
+"Flathub'da olduğu gibi göstermek için yapılmış basit bir banner ön izleme "
+"aracıdır."
+
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:37
+msgid "Aurea adaptive"
+msgstr "Aurea uyarlanabilir"
+
+#: src/main.py:75
+msgid "A banner previewer for Flatpak metainfo files."
+msgstr "Flatpak metainfo dosyaları için banner ön izleyici."
+
+#: src/main.py:79
+msgid "translator-credits"
+msgstr "Sabri Ünal <yakushabb@gmail.com>"
+
+#: src/window.py:123 src/window.py:180
+msgid "Can't load appstream"
+msgstr "appstream yüklenemedi"
+
+#: src/window.py:227
+msgid "No screenshot"
+msgstr "Ekran görüntüsü yok"
+
+#: src/window.py:281
+msgid "No icon found"
+msgstr "Simge bulunamadı"
+
+#: src/window.py:331
+msgid "Can't load screenshot"
+msgstr "Ekran görüntüsü yüklenemedi"
+
+#: src/window.py:398
+msgid "No branding colors."
+msgstr "Marka renkleri yok."
+
+#: src/window.py:408
+msgid "Light and dark brand color have not been defined"
+msgstr "Açık ve koyu marka rengi tanımlanmamış"
+
+#: src/window.py:422
+msgid "Light brand color have not been defined"
+msgstr "Açık marka rengi tanımlanmamış"
+
+#: src/window.py:428
+msgid "Dark brand color have not been defined"
+msgstr "Koyu marka rengi tanımlanmamış"
+
+#: src/window.py:448
+msgid "Banner reloaded"
+msgstr "Banner yeniden yüklendi"
+
+#: src/gtk/window.blp:28
+msgid "Open"
+msgstr "Aç"
+
+#: src/gtk/window.blp:38
+msgid "Banner Preview"
+msgstr "Banner Ön İzleme"
+
+#: src/gtk/window.blp:46
+msgid "Main Menu"
+msgstr "Ana Menü"
+
+#: src/gtk/window.blp:71
+msgid "Open a Metainfo File"
+msgstr "Metainfo Dosyası Aç"
+
+#: src/gtk/window.blp:72
+msgid "Drop Appstream file here"
+msgstr "Appstream dosyasını buraya bırakın"
+
+#: src/gtk/window.blp:77
+msgid "Open…"
+msgstr "Aç…"
+
+#: src/gtk/window.blp:94
+msgid "Drop file to open"
+msgstr "Açmak için dosyayı bırak"
+
+#: src/gtk/window.blp:164 src/gtk/window.blp:307
+msgid "Application Name"
+msgstr "Uygulama Adı"
+
+#: src/gtk/window.blp:175 src/gtk/window.blp:318
+msgid "A nice description for an app"
+msgstr "Uygulama için güzel bir açıklama"
+
+#: src/gtk/window.blp:233 src/gtk/window.blp:380
+msgid "No Screenshot loaded or defined"
+msgstr "Ekran görüntüsü yüklenmemiş ya da tanımlanmamış"
+
+#: src/gtk/window.blp:412
+msgid "_Reload"
+msgstr "_Yeniden Yükle"
+
+#: src/gtk/window.blp:417
+msgid "_Keyboard Shortcuts"
+msgstr "_Klavye Kısayolları"
+
+#: src/gtk/window.blp:422
+msgid "_About Aurea"
+msgstr "Aurea _Hakkında"
+
+#: src/gtk/help-overlay.ui:11
+msgctxt "shortcut window"
+msgid "General"
+msgstr "Genel"
+
+#: src/gtk/help-overlay.ui:14
+msgctxt "shortcut window"
+msgid "Reload"
+msgstr "Yeniden Yükle"
+
+#: src/gtk/help-overlay.ui:20
+msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr "Kısayolları Göster"
+
+#: src/gtk/help-overlay.ui:26
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Çık"
