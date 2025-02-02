@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $AureaWindow : Adw.ApplicationWindow {
+template $AureaWindow: Adw.ApplicationWindow {
   default-width: 1424;
   default-height: 824;
   width-request: 397;
@@ -16,8 +16,7 @@ template $AureaWindow : Adw.ApplicationWindow {
     }
   }
 
-  content:
-  Adw.ToolbarView {
+  content: Adw.ToolbarView {
     [top]
     Adw.HeaderBar header_bar {
       [start]
@@ -26,6 +25,7 @@ template $AureaWindow : Adw.ApplicationWindow {
           label: _("Open");
           icon-name: "folder-open-symbolic";
         }
+
         clicked => $open_file_dialog();
       }
 
@@ -45,16 +45,18 @@ template $AureaWindow : Adw.ApplicationWindow {
         menu-model: primary_menu;
       }
     }
-    content:
-    Adw.ToastOverlay toast_overlay {
 
-    Overlay {
+    content: Adw.ToastOverlay toast_overlay {
+      Overlay {
         [overlay]
         Adw.Bin bin {
           can-focus: false;
           can-target: false;
           height-request: 150;
-          styles ["overlay-drag-area"]
+
+          styles [
+            "overlay-drag-area",
+          ]
         }
 
         ScrolledWindow scrolled_window {
@@ -65,11 +67,15 @@ template $AureaWindow : Adw.ApplicationWindow {
 
             StackPage {
               name: "welcome_page";
+
               child: Adw.StatusPage status_page {
                 title: _("Open a Metainfo File");
                 description: _("Drop Appstream file here");
                 icon-name: "folder-documents-symbolic";
-                styles ["overlay-drag-area"]
+
+                styles [
+                  "overlay-drag-area",
+                ]
 
                 Button {
                   label: _("Open…");
@@ -78,39 +84,38 @@ template $AureaWindow : Adw.ApplicationWindow {
 
                   styles [
                     "pill",
-                    "suggested-action"
+                    "suggested-action",
                   ]
                 }
-              }
-
-              ;
+              };
             }
 
             StackPage {
               name: "drop_area_page";
+
               child: Adw.StatusPage drop_area_status_page {
                 title: _("Drop file to open");
                 icon-name: "list-drag-handle-symbolic";
 
                 styles [
-                  "overlay-drag-area"
+                  "overlay-drag-area",
                 ]
-              }
-
-              ;
+              };
             }
 
             StackPage {
               name: "content_page";
+
               child: Grid {
                 valign: fill;
                 row-homogeneous: true;
-                // The upper banner
+
                 Box {
                   layout {
-                    row: 0;
-                    column: 0;
+                    row: "0";
+                    column: "0";
                   }
+
                   Adw.Clamp clamp {
                     maximum-size: 1400;
                     tightening-threshold: 2050;
@@ -123,6 +128,7 @@ template $AureaWindow : Adw.ApplicationWindow {
 
                     Box main_card {
                       orientation: horizontal;
+
                       styles [
                         "card",
                         "background-card",
@@ -148,28 +154,28 @@ template $AureaWindow : Adw.ApplicationWindow {
                             pixel-size: 150;
 
                             styles [
-                              "icon-dropshadow"
+                              "icon-dropshadow",
                             ]
                           }
 
                           EditableLabel title {
                             halign: center;
-                            xalign: 0.50;
+                            xalign: 0.5;
                             text: _("Application Name");
 
                             styles [
-                              "title-1"
+                              "title-1",
                             ]
                           }
 
                           EditableLabel description {
                             margin-top: 6;
                             halign: center;
-                            xalign: 0.50;
+                            xalign: 0.5;
                             text: _("A nice description for an app");
 
                             styles [
-                              "caption"
+                              "caption",
                             ]
                           }
                         }
@@ -177,45 +183,46 @@ template $AureaWindow : Adw.ApplicationWindow {
                         Stack screenshot_stack {
                           transition-type: crossfade;
                           width-request: 880;
+
                           StackPage {
                             name: "screenshot";
-                            child:
-                              Adw.Clamp {
-                                tightening-threshold: 900;
-                                maximum-size: 880;
-                                halign: end;
-                                valign: end;
 
-                                Picture screenshot {
-                                  halign: fill;
-                                  valign: fill;
-                                  can-shrink: true;
-                                  margin-end: 90;
-                                  content-fit: contain;
-                                  visible: true;
-                                }
+                            child: Adw.Clamp {
+                              tightening-threshold: 900;
+                              maximum-size: 880;
+                              halign: end;
+                              valign: end;
+
+                              Picture screenshot {
+                                halign: fill;
+                                valign: fill;
+                                can-shrink: true;
+                                margin-end: 90;
+                                content-fit: contain;
+                                visible: true;
                               }
-                              ;
+                            };
                           }
 
                           StackPage {
                             name: "loading_screenshot";
-                            child:
-                            Adw.Clamp {
+
+                            child: Adw.Clamp {
                               tightening-threshold: 900;
                               maximum-size: 880;
                               halign: fill;
                               valign: fill;
 
-                              Adw.Spinner { height-request: 42; }
-                            }
-                            ;
+                              Adw.Spinner {
+                                height-request: 42;
+                              }
+                            };
                           }
 
                           StackPage {
                             name: "no_screenshot";
-                            child:
-                            Adw.Clamp {
+
+                            child: Adw.Clamp {
                               tightening-threshold: 900;
                               maximum-size: 880;
                               halign: end;
@@ -224,25 +231,23 @@ template $AureaWindow : Adw.ApplicationWindow {
                               Label {
                                 label: _("No Screenshot loaded or defined");
                               }
-                            }
-                            ;
+                            };
                           }
-
                         }
                       }
                     }
                   }
-
                 }
 
-                // The lower banner
                 Box {
                   layout {
-                    row: 1;
-                    column: 0;
+                    row: "1";
+                    column: "0";
                   }
 
-                  styles ["window_bg_dark_color"]
+                  styles [
+                    "window_bg_dark_color",
+                  ]
 
                   Adw.Clamp clamp_dark {
                     maximum-size: 1400;
@@ -257,6 +262,7 @@ template $AureaWindow : Adw.ApplicationWindow {
 
                     Box main_card_dark {
                       orientation: horizontal;
+
                       styles [
                         "card",
                         "background-card",
@@ -282,28 +288,28 @@ template $AureaWindow : Adw.ApplicationWindow {
                             pixel-size: 150;
 
                             styles [
-                              "icon-dropshadow"
+                              "icon-dropshadow",
                             ]
                           }
 
                           EditableLabel title_dark {
                             halign: center;
-                            xalign: 0.50;
+                            xalign: 0.5;
                             text: _("Application Name");
 
                             styles [
-                              "title-1"
+                              "title-1",
                             ]
                           }
 
                           EditableLabel description_dark {
                             margin-top: 6;
                             halign: center;
-                            xalign: 0.50;
+                            xalign: 0.5;
                             text: _("A nice description for an app");
 
                             styles [
-                              "caption"
+                              "caption",
                             ]
                           }
                         }
@@ -311,45 +317,46 @@ template $AureaWindow : Adw.ApplicationWindow {
                         Stack screenshot_stack_dark {
                           transition-type: crossfade;
                           width-request: 880;
+
                           StackPage {
                             name: "screenshot";
-                            child:
-                              Adw.Clamp {
-                                tightening-threshold: 900;
-                                maximum-size: 880;
-                                halign: end;
-                                valign: end;
 
-                                Picture screenshot_dark {
-                                  halign: fill;
-                                  valign: fill;
-                                  can-shrink: true;
-                                  margin-end: 90;
-                                  content-fit: contain;
-                                  visible: true;
-                                }
+                            child: Adw.Clamp {
+                              tightening-threshold: 900;
+                              maximum-size: 880;
+                              halign: end;
+                              valign: end;
+
+                              Picture screenshot_dark {
+                                halign: fill;
+                                valign: fill;
+                                can-shrink: true;
+                                margin-end: 90;
+                                content-fit: contain;
+                                visible: true;
                               }
-                              ;
+                            };
                           }
 
                           StackPage {
                             name: "loading_screenshot";
-                            child:
-                            Adw.Clamp {
+
+                            child: Adw.Clamp {
                               tightening-threshold: 900;
                               maximum-size: 880;
                               halign: fill;
                               valign: fill;
 
-                              Adw.Spinner { height-request: 42; }
-                            }
-                            ;
+                              Adw.Spinner {
+                                height-request: 42;
+                              }
+                            };
                           }
 
                           StackPage {
                             name: "no_screenshot";
-                            child:
-                            Adw.Clamp {
+
+                            child: Adw.Clamp {
                               tightening-threshold: 900;
                               maximum-size: 880;
                               halign: end;
@@ -358,26 +365,20 @@ template $AureaWindow : Adw.ApplicationWindow {
                               Label {
                                 label: _("No Screenshot loaded or defined");
                               }
-                            }
-                            ;
+                            };
                           }
-
                         }
                       }
                     }
                   }
-
                 }
               };
             }
           }
         }
       }
-    }
-    ;
-  }
-
-  ;
+    };
+  };
 }
 
 menu primary_menu {
