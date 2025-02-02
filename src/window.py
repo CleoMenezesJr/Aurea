@@ -224,7 +224,9 @@ class AureaWindow(Adw.ApplicationWindow):
         screenshots_tag: ET.Element = xml_tree.find("screenshots")
         self.screenshot.props.visible = bool(screenshots_tag)
         if not screenshots_tag:
-            self.toast_overlay.add_toast(Adw.Toast(title=gettext("No screenshot")))
+            self.toast_overlay.add_toast(
+                Adw.Toast(title=gettext("No screenshot"))
+            )
             self.screenshot_stack.props.visible_child_name = "no_screenshot"
             self.screenshot_stack_dark.props.visible_child_name = (
                 "no_screenshot"
@@ -278,7 +280,9 @@ class AureaWindow(Adw.ApplicationWindow):
 
     def set_icon(self, icon_path: str) -> None:
         if not icon_path:
-            self.toast_overlay.add_toast(Adw.Toast(title=gettext("No icon found")))
+            self.toast_overlay.add_toast(
+                Adw.Toast(title=gettext("No icon found"))
+            )
             return None
 
         try:
@@ -405,7 +409,9 @@ class AureaWindow(Adw.ApplicationWindow):
         if light_color is None and dark_color is None:
             self.toast_overlay.add_toast(
                 Adw.Toast(
-                    title=gettext("Light and dark brand color have not been defined")
+                    title=gettext(
+                        "Light and dark brand color have not been defined"
+                    )
                 )
             )
             return None
@@ -419,13 +425,17 @@ class AureaWindow(Adw.ApplicationWindow):
             color_scheme["light"] = light_color.text
         else:
             self.toast_overlay.add_toast(
-                Adw.Toast(title=gettext("Light brand color have not been defined"))
+                Adw.Toast(
+                    title=gettext("Light brand color have not been defined")
+                )
             )
         if dark_color is not None:
             color_scheme["dark"] = dark_color.text
         else:
             self.toast_overlay.add_toast(
-                Adw.Toast(title=gettext("Dark brand color have not been defined"))
+                Adw.Toast(
+                    title=gettext("Dark brand color have not been defined")
+                )
             )
 
         return color_scheme
