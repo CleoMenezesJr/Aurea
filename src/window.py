@@ -19,12 +19,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 SPDX-License-Identifier: GPL-3.0-or-later
 """
 
-from gettext import gettext
 import io
 import logging
 import os
 import xml.etree.ElementTree as ET
-from threading import Thread
+from gettext import gettext
+from threading import Event, Thread
 
 from gi.repository import Adw, Gdk, GdkPixbuf, Gio, GLib, Gtk, Soup
 from PIL import Image
@@ -243,6 +243,7 @@ class AureaWindow(Adw.ApplicationWindow):
         metainfo_path: str,
         metainfo_file_name: str,
         try_again: bool = True,
+        timeout: int = 5,
     ) -> None:
         metainfo_path: str = os.path.dirname(metainfo_path)
         metainfo_str_index: str = metainfo_file_name.rfind(".xml")
@@ -251,10 +252,15 @@ class AureaWindow(Adw.ApplicationWindow):
         )
 
         def navigate_directories(
-            self, metainfo_file_name, metainfo_path
+            self,
+            metainfo_file_name: str,
+            metainfo_path: str,
+            stop_event: Event,
         ) -> str | None:
             icon_path: str | None = None
             for root, dirs, files in os.walk(metainfo_path):
+                if stop_event.is_set():
+                    return None
                 if icon_name in files:
                     icon_path = os.path.join(root, icon_name)
                     break
@@ -272,10 +278,19 @@ class AureaWindow(Adw.ApplicationWindow):
 
             return self.set_icon(icon_path)
 
-        Thread(
+        stop_event = Event()
+        thread = Thread(
             target=navigate_directories,
-            args=(self, metainfo_file_name, metainfo_path),
-        ).start()
+            args=(self, metainfo_file_name, metainfo_path, stop_event),
+        )
+
+        thread.start()
+        thread.join(timeout)
+
+        if thread.is_alive():
+            stop_event.set()
+            return None
+
         return None
 
     def set_icon(self, icon_path: str) -> None:
