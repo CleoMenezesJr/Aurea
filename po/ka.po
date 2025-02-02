@@ -187,7 +187,7 @@ msgid "A nice description for an app"
 msgstr "გასაგები აღწერა აპისთვის"
 
 #: src/gtk/window.blp:233 src/gtk/window.blp:380
-msgid "No Screenshot loaded or defined"
+msgid "No screenshot loaded or defined"
 msgstr "ეკრანის ანაბეჭდი აღწერილი, ან ჩატვირთული არაა"
 
 #: src/gtk/window.blp:412

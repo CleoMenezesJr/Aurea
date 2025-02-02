@@ -127,7 +127,7 @@ msgid "A nice description for an app"
 msgstr "Uygulama için güzel bir açıklama"
 
 #: src/gtk/window.blp:233 src/gtk/window.blp:380
-msgid "No Screenshot loaded or defined"
+msgid "No screenshot loaded or defined"
 msgstr "Ekran görüntüsü yüklenmemiş ya da tanımlanmamış"
 
 #: src/gtk/window.blp:412

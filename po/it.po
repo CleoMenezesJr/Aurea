@@ -131,7 +131,7 @@ msgid "A nice description for an app"
 msgstr "Una bella descrizione per un'app"
 
 #: src/gtk/window.blp:233 src/gtk/window.blp:380
-msgid "No Screenshot loaded or defined"
+msgid "No screenshot loaded or defined"
 msgstr "Nessuno screenshot caricato o definito"
 
 #: src/gtk/window.blp:412
