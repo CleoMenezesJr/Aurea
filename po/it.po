@@ -1,0 +1,167 @@
+# ITALIAN TRANSLATION.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# ALBANO BATTISTELLA <ALBANOBATTISTELLA@GMAIL.COM>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-09-22 18:18+0200\n"
+"PO-Revision-Date: 2024-09-23 15:19+0100\n"
+"Last-Translator: Albano Battistella <albanobattistella@gmail.com>\n"
+"Language-Team: Italian\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.4\n"
+
+#: data/io.github.cleomenezesjr.aurea.desktop.in:3
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:6
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:33
+msgid "Aurea"
+msgstr "Aurea"
+
+#: data/io.github.cleomenezesjr.aurea.desktop.in:4
+msgid "A banner previewer for Flatpak metainfo files"
+msgstr "Un visualizzatore di banner per i file metainfo di Flatpak"
+
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:7
+msgid "Flatpak metainfo banner previewer"
+msgstr "Anteprima sui banner"
+
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:9
+msgid ""
+"Aurea is a simple preview banner made to read metainfo files from Flatpak "
+"apps and represent them as they would on Flathub."
+msgstr ""
+"Aurea è un semplice banner di anteprima creato per leggere file metainfo da app "
+"Flatpak e rappresentarle come farebbero su Flathub."
+
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:17
+msgid "Cleo Menezes Jr."
+msgstr "Cleo Menezes Jr."
+
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:37
+msgid "Aurea adaptive"
+msgstr "Adattamento alle dimensioni dello schermo"
+
+#: src/main.py:75
+msgid "A banner previewer for Flatpak metainfo files."
+msgstr ""
+"Assicurati che la tua app venga mostrata nel suo lato migliore! Aurea ti permette di vedere come "
+"potenzialmente il banner con i colori del profilo dell'app, lo screenshot e l'icona dell'app "
+"uscirà su un sito web o in un app center."
+
+#: src/main.py:79
+msgid "translator-credits"
+msgstr "Albano Battistella"
+
+#: src/window.py:123 src/window.py:180
+msgid "Can't load appstream"
+msgstr "Impossibile caricare AppStream"
+
+#: src/window.py:227
+msgid "No screenshot"
+msgstr "Nessun screenshot"
+
+#: src/window.py:281
+msgid "No icon found"
+msgstr "Nessuna icona trovata"
+
+#: src/window.py:331
+msgid "Can't load screenshot"
+msgstr "Impossibile caricare lo screenshot"
+
+#: src/window.py:398
+msgid "No branding colors."
+msgstr "Nessun colore del marchio."
+
+#: src/window.py:408
+msgid "Light and dark brand color have not been defined"
+msgstr "Il colore chiaro e scuro del marchio non è stato definito"
+
+#: src/window.py:422
+msgid "Light brand color have not been defined"
+msgstr "Il colore chiaro del marchio non è stato definito"
+
+#: src/window.py:428
+msgid "Dark brand color have not been defined"
+msgstr "Il colore scuro del marchio non è stato definito"
+
+#: src/window.py:448
+msgid "Banner reloaded"
+msgstr "Banner ricaricato"
+
+#: src/gtk/window.blp:28
+msgid "Open"
+msgstr "Åpri"
+
+#: src/gtk/window.blp:38
+msgid "Banner Preview"
+msgstr "Anteprima del banner"
+
+#: src/gtk/window.blp:46
+msgid "Main Menu"
+msgstr "Menù principale"
+
+#: src/gtk/window.blp:71
+msgid "Open a Metainfo File"
+msgstr "Anteprima del banner dell'app"
+
+#: src/gtk/window.blp:72
+msgid "Drop Appstream file here"
+msgstr "Rilascia qui il file Appstream"
+
+#: src/gtk/window.blp:77
+msgid "Open…"
+msgstr "Åpri…"
+
+#: src/gtk/window.blp:94
+msgid "Drop file to open"
+msgstr "Trascina il file per aprirlo"
+
+#: src/gtk/window.blp:164 src/gtk/window.blp:307
+msgid "Application Name"
+msgstr "Nome applicazione"
+
+#: src/gtk/window.blp:175 src/gtk/window.blp:318
+msgid "A nice description for an app"
+msgstr "Una bella descrizione per un'app"
+
+#: src/gtk/window.blp:233 src/gtk/window.blp:380
+msgid "No Screenshot loaded or defined"
+msgstr "Nessuno screenshot caricato o definito"
+
+#: src/gtk/window.blp:412
+msgid "_Reload"
+msgstr "_Ricarica"
+
+#: src/gtk/window.blp:417
+msgid "_Keyboard Shortcuts"
+msgstr "_Scorciatoie da tastiera"
+
+#: src/gtk/window.blp:422
+msgid "_About Aurea"
+msgstr "_Informazioni su Aurea"
+
+#: src/gtk/help-overlay.ui:11
+msgctxt "shortcut window"
+msgid "General"
+msgstr "Generale"
+
+#: src/gtk/help-overlay.ui:14
+msgctxt "shortcut window"
+msgid "Reload"
+msgstr "Ricarica"
+
+#: src/gtk/help-overlay.ui:20
+msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr "Mostra scorciatoie"
+
+#: src/gtk/help-overlay.ui:26
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Esci"
