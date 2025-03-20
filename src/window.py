@@ -57,13 +57,6 @@ class AureaWindow(Adw.ApplicationWindow):
         self.style_provider = Gtk.CssProvider()
         self.style_manager = Adw.StyleManager.get_default()
 
-        _title_dark_label = self.title_dark.get_first_child().get_first_child()
-        _title_dark_label.add_css_class("card_fg_dark_color")
-        _description_dark_label = (
-            self.description_dark.get_first_child().get_first_child()
-        )
-        _description_dark_label.add_css_class("card_fg_dark_color")
-
         _drop_target_content = Gdk.ContentFormats.new_for_gtype(Gio.File)
         _drop_target: Gtk.DropTarget = Gtk.DropTarget(
             formats=_drop_target_content, actions=Gdk.DragAction.COPY
@@ -215,6 +208,7 @@ class AureaWindow(Adw.ApplicationWindow):
         self.main_card.remove_css_class("main-card")
         self.main_card_dark.remove_css_class("main-card-dark")
         self.branding_colors = self.get_branding_colors(xml_tree)
+
         if self.branding_colors:
             self.main_card.add_css_class("main-card")
             self.main_card_dark.add_css_class("main-card-dark")
@@ -223,6 +217,7 @@ class AureaWindow(Adw.ApplicationWindow):
         self.set_loading_screenshot_state(True)
         screenshots_tag: ET.Element = xml_tree.find("screenshots")
         self.screenshot.props.visible = bool(screenshots_tag)
+
         if not screenshots_tag:
             self.toast_overlay.add_toast(
                 Adw.Toast(title=gettext("No screenshot"))

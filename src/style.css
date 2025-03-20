@@ -1,9 +1,9 @@
 .window_bg_dark_color {
-  background-color: #242424;
+  background-color: #222226;
 }
 
-.card_bg_dark_color {
-  background-color: rgba(255, 255, 255, 0.08);
+.main_card_dark {
+  background-color: rgb(255 255 255 / 8%);
 }
 
 .card_fg_dark_color {

@@ -265,7 +265,7 @@ template $AureaWindow: Adw.ApplicationWindow {
 
                       styles [
                         "card",
-                        "background-card",
+                        "main_card_dark",
                       ]
 
                       Box content_view_dark {
@@ -299,6 +299,7 @@ template $AureaWindow: Adw.ApplicationWindow {
 
                             styles [
                               "title-1",
+                              "card_fg_dark_color",
                             ]
                           }
 
@@ -310,6 +311,7 @@ template $AureaWindow: Adw.ApplicationWindow {
 
                             styles [
                               "caption",
+                              "card_fg_dark_color",
                             ]
                           }
                         }
@@ -364,6 +366,10 @@ template $AureaWindow: Adw.ApplicationWindow {
 
                               Label {
                                 label: _("No screenshot loaded or defined");
+
+                                styles [
+                                  "card_fg_dark_color",
+                                ]
                               }
                             };
                           }
