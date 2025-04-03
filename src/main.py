@@ -20,10 +20,9 @@
 """
 
 import sys
+from gettext import gettext
 
 import gi
-
-from gettext import gettext
 
 gi.require_versions({"Gtk": "4.0", "Soup": "3.0", "Adw": "1"})
 
@@ -62,8 +61,7 @@ class AureaApplication(Adw.Application):
         if file:
             file_info = file.query_info("standard::name", 0, None)
             win.handle_file_input(
-                path=file.peek_path(),
-                file_name=file_info.get_name()
+                path=file.peek_path(), file_name=file_info.get_name()
             )
             win.setup_monitor_for_file(file)
 
@@ -74,7 +72,7 @@ class AureaApplication(Adw.Application):
             application_icon="io.github.cleomenezesjr.aurea",
             comments=gettext("A banner previewer for Flatpak metainfo files."),
             developer_name="Cleo Menezes Jr.",
-            version="1.5",
+            version="1.6",
             developers=["Cleo Menezes Jr. https://github.com/CleoMenezesJr"],
             translator_credits=gettext("translator-credits"),
             copyright="© 2024 Cleo Menezes Jr.",

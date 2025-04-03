@@ -39,6 +39,16 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="1.6" date="2024-04-02">
+      <description translate="no">
+        <ul>
+          <li>GNOME 48 runtime</li>
+          <li>Brazilian Portuguese, Turkish, Georgian and Italian translations</li>
+          <li>Blueprint 0.16.0</li>
+          <li>Bug fixes and more...</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5" date="2024-09-21">
       <description translate="no">
         <ul>
