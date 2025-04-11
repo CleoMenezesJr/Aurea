@@ -72,14 +72,23 @@ class AureaApplication(Adw.Application):
             application_icon="io.github.cleomenezesjr.aurea",
             comments=gettext("A banner previewer for Flatpak metainfo files."),
             developer_name="Cleo Menezes Jr.",
-            version="1.6",
+            version="1.6.1",
             developers=["Cleo Menezes Jr. https://github.com/CleoMenezesJr"],
-            translator_credits=gettext("translator-credits"),
             copyright="© 2024 Cleo Menezes Jr.",
             support_url="https://matrix.to/#/%23aurea-app:matrix.org",
             issue_url="https://github.com/CleoMenezesJr/Aurea/issues/new",
             license_type=Gtk.License.GPL_3_0,
             designers=["Tobias Bernard https://github.com/bertob"],
+        )
+
+        # Translators: Replace "translator-credits" with your name/username,
+        # and optionally an email or URL.
+        # about.set_translator_credits(_("translator-credits"))
+        about.add_link(gettext("Donate"), "https://ko-fi.com/cleomenezesjr ")
+        about.add_other_app(
+            "io.github.cleomenezesjr.Serigy",
+            gettext("Serigy"),
+            gettext("Pin your clipboard"),
         )
         about.present(self.props.active_window)
 

@@ -39,7 +39,14 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
-    <release version="1.6" date="2024-04-02">
+    <release version="1.6.1" date="2025-05-11">
+      <description translate="no">
+        <ul>
+          <li>Add other apps to the about section</li>
+        </ul>
+      </description>
+    </release>
+    <release version="1.6" date="2025-04-02">
       <description translate="no">
         <ul>
           <li>GNOME 48 runtime</li>
