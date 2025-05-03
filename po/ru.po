@@ -1,0 +1,175 @@
+# Russian translations for Aurea package.
+# Copyright (C) 2024-2025 Cleo Menezes Jr.
+# This file is distributed under the same license as the Aurea package.
+# Vladimir Kosolapov, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: aurea\n"
+"Report-Msgid-Bugs-To: https://github.com/CleoMenezesJr/Aurea/issues\n"
+"POT-Creation-Date: 2025-05-03 13:00+0300\n"
+"PO-Revision-Date: 2025-05-03 14:00+0300\n"
+"Last-Translator: Vladimir Kosolapov\n"
+"Language-Team: \n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: data/io.github.cleomenezesjr.aurea.desktop.in:2
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:6
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:33
+msgid "Aurea"
+msgstr "Aurea"
+
+#: data/io.github.cleomenezesjr.aurea.desktop.in:3
+msgid "A banner previewer for Flatpak metainfo files"
+msgstr "Программа для предпросмотра баннеров metainfo-файлов Flatpak"
+
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:7
+msgid "Flatpak metainfo banner previewer"
+msgstr "Программа для предпросмотра баннеров metainfo-файлов Flatpak"
+
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:9
+msgid ""
+"Aurea is a simple preview banner made to read metainfo files from Flatpak "
+"apps and represent them as they would on Flathub."
+msgstr ""
+"Aurea — это простая программа для предпросмотра баннеров metainfo-файлов "
+"приложений Flatpak и их отображения в формате главной страницы Flathub."
+
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:37
+msgid "Aurea adaptive"
+msgstr "Адаптивный интерфейс"
+
+#: src/main.py:73
+msgid "A banner previewer for Flatpak metainfo files."
+msgstr "Программа для предпросмотра баннеров metainfo-файлов Flatpak."
+
+#. Translators: Replace "translator-credits" with your name/username,
+#. and optionally an email or URL.
+#: src/main.py:86
+msgid "translator-credits"
+msgstr "Vladimir Kosolapov https://github.com/vmkspv"
+
+#: src/main.py:87
+msgid "Donate"
+msgstr "Поддержать"
+
+#: src/main.py:90
+msgid "Serigy"
+msgstr "Serigy"
+
+#: src/main.py:91
+msgid "Pin your clipboard"
+msgstr "Закрепите буфер обмена"
+
+#: src/window.py:116 src/window.py:173
+msgid "Can't load appstream"
+msgstr "Не удалось загрузить данные appstream"
+
+#: src/window.py:223
+msgid "No screenshot"
+msgstr "Отсутствует скриншот"
+
+#: src/window.py:294
+msgid "No icon found"
+msgstr "Значок не найден"
+
+#: src/window.py:345
+msgid "Can't load screenshot"
+msgstr "Не удалось загрузить скриншот"
+
+#: src/window.py:412
+msgid "No branding colors."
+msgstr "Отсутствуют цвета приложения."
+
+#: src/window.py:423
+msgid "Light and dark brand color have not been defined"
+msgstr "Светлый и тёмный цвета приложения не заданы"
+
+#: src/window.py:439
+msgid "Light brand color have not been defined"
+msgstr "Светлый цвет приложения не определён"
+
+#: src/window.py:447
+msgid "Dark brand color have not been defined"
+msgstr "Тёмный цвет приложения не определён"
+
+#: src/window.py:468
+msgid "Banner reloaded"
+msgstr "Баннер перезагружен"
+
+#: src/gtk/window.blp:25
+msgid "Open"
+msgstr "Открыть"
+
+#: src/gtk/window.blp:36
+msgid "Banner Preview"
+msgstr "Предпросмотр баннера"
+
+#: src/gtk/window.blp:44
+msgid "Main Menu"
+msgstr "Главное меню"
+
+#: src/gtk/window.blp:72
+msgid "Open a Metainfo File"
+msgstr "Открыть файл Metainfo"
+
+#: src/gtk/window.blp:73
+msgid "Drop Appstream file here"
+msgstr "Перетащите файл Appstream сюда"
+
+#: src/gtk/window.blp:81
+msgid "Open…"
+msgstr "Открыть…"
+
+#: src/gtk/window.blp:97
+msgid "Drop file to open"
+msgstr "Перетащите файл для открытия"
+
+#: src/gtk/window.blp:164 src/gtk/window.blp:298
+msgid "Application Name"
+msgstr "Название приложения"
+
+#: src/gtk/window.blp:175 src/gtk/window.blp:310
+msgid "A nice description for an app"
+msgstr "Хорошее описание приложения"
+
+#: src/gtk/window.blp:232 src/gtk/window.blp:368
+msgid "No screenshot loaded or defined"
+msgstr "Скриншот не загружен или не задан"
+
+#: src/gtk/window.blp:393
+msgid "_Reload"
+msgstr "_Перезагрузить"
+
+#: src/gtk/window.blp:398
+msgid "_Keyboard Shortcuts"
+msgstr "_Комбинации клавиш"
+
+#: src/gtk/window.blp:403
+msgid "_About Aurea"
+msgstr "_О приложении"
+
+#: src/gtk/help-overlay.ui:11
+msgctxt "shortcut window"
+msgid "General"
+msgstr "Общие"
+
+#: src/gtk/help-overlay.ui:14
+msgctxt "shortcut window"
+msgid "Reload"
+msgstr "Перезагрузить"
+
+#: src/gtk/help-overlay.ui:20
+msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr "Показать комбинации клавиш"
+
+#: src/gtk/help-overlay.ui:26
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Выход"
