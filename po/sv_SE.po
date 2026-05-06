@@ -1,0 +1,165 @@
+# Swedish translation for aurea
+# Copyright (C) 2024 THE aurea's COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Luna Jernberg <lunajernberg@gnome.org>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-09-22 18:18+0200\n"
+"PO-Revision-Date: 2026-05-06 22:26+0200\n"
+"Last-Translator: Luna Jernberg <lunajernberg@gnome.org\n"
+"Language-Team: Swedish\n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
+
+#: data/io.github.cleomenezesjr.aurea.desktop.in:3
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:6
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:33
+msgid "Aurea"
+msgstr "Aurea"
+
+#: data/io.github.cleomenezesjr.aurea.desktop.in:4
+msgid "A banner previewer for Flatpak metainfo files"
+msgstr "En bannerförhandsgranskare för Flatpak metainfo-filer"
+
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:7
+msgid "Flatpak metainfo banner previewer"
+msgstr "Bannerförhandsgranskare för Flatpak metainfo-filer"
+
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:9
+msgid ""
+"Aurea is a simple preview banner made to read metainfo files from Flatpak "
+"apps and represent them as they would on Flathub."
+msgstr ""
+"Aurea är en enkel förhandsgranskningsbanner gjord för att läsa "
+"metainfofiler från Flatpak-program och representera dem som de skulle göras "
+"på Flathub."
+
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:17
+msgid "Cleo Menezes Jr."
+msgstr "Cleo Menezes Jr."
+
+#: data/io.github.cleomenezesjr.aurea.metainfo.xml.in:37
+msgid "Aurea adaptive"
+msgstr "Aurea adaptiv"
+
+#: src/main.py:75
+msgid "A banner previewer for Flatpak metainfo files."
+msgstr "En bannerförhandsgranskare för Flatpak metainfo-filer."
+
+#: src/main.py:79
+msgid "translator-credits"
+msgstr "Luna Jernberg <lunajernberg@gnome.org>"
+
+#: src/window.py:123 src/window.py:180
+msgid "Can't load appstream"
+msgstr "Kan inte ladda Appstream"
+
+#: src/window.py:227
+msgid "No screenshot"
+msgstr "Hittade ingen skärmdump"
+
+#: src/window.py:281
+msgid "No icon found"
+msgstr "Hittade ingen ikon"
+
+#: src/window.py:331
+msgid "Can't load screenshot"
+msgstr "Kan inte ladda skärmdump"
+
+#: src/window.py:398
+msgid "No branding colors."
+msgstr "Inga varumärkesfärger."
+
+#: src/window.py:408
+msgid "Light and dark brand color have not been defined"
+msgstr "Ljus och mörk varumärkesfärg har inte definierats"
+
+#: src/window.py:422
+msgid "Light brand color have not been defined"
+msgstr "Ljus varumärkesfärg har inte definierats"
+
+#: src/window.py:428
+msgid "Dark brand color have not been defined"
+msgstr "Mörk varumärkesfärg har inte definierats"
+
+#: src/window.py:448
+msgid "Banner reloaded"
+msgstr "Bannern laddades om"
+
+#: src/gtk/window.blp:28
+msgid "Open"
+msgstr "Öppna"
+
+#: src/gtk/window.blp:38
+msgid "Banner Preview"
+msgstr "Banner förhandsgranskning"
+
+#: src/gtk/window.blp:46
+msgid "Main Menu"
+msgstr "Huvudmeny"
+
+#: src/gtk/window.blp:71
+msgid "Open a Metainfo File"
+msgstr "Öppna en metainfofil"
+
+#: src/gtk/window.blp:72
+msgid "Drop Appstream file here"
+msgstr "Dra Appstream-fil här"
+
+#: src/gtk/window.blp:77
+msgid "Open…"
+msgstr "Öppna…"
+
+#: src/gtk/window.blp:94
+msgid "Drop file to open"
+msgstr "Dra fil för att öppna"
+
+#: src/gtk/window.blp:164 src/gtk/window.blp:307
+msgid "Application Name"
+msgstr "Programnamn"
+
+#: src/gtk/window.blp:175 src/gtk/window.blp:318
+msgid "A nice description for an app"
+msgstr "En bra beskrivning för ett program"
+
+#: src/gtk/window.blp:233 src/gtk/window.blp:380
+msgid "No screenshot loaded or defined"
+msgstr "Ingen skärmdump laddad eller definierad"
+
+#: src/gtk/window.blp:412
+msgid "_Reload"
+msgstr "_Ladda om"
+
+#: src/gtk/window.blp:417
+msgid "_Keyboard Shortcuts"
+msgstr "_Tangentbordsgenvägar"
+
+#: src/gtk/window.blp:422
+msgid "_About Aurea"
+msgstr "_Om Aurea"
+
+#: src/gtk/help-overlay.ui:11
+msgctxt "shortcut window"
+msgid "General"
+msgstr "Allmänt"
+
+#: src/gtk/help-overlay.ui:14
+msgctxt "shortcut window"
+msgid "Reload"
+msgstr "Ladda om"
+
+#: src/gtk/help-overlay.ui:20
+msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr "Visa genvägar"
+
+#: src/gtk/help-overlay.ui:26
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Avsluta"
