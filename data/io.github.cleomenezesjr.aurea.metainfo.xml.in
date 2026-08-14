@@ -39,6 +39,15 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="1.7.0" date="2026-08-13">
+      <description translate="no">
+        <ul>
+          <li>GNOME 50 runtime</li>
+          <li>Blueprint 0.22.2</li>
+          <li>Pillow 12.3.0</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.6.1" date="2025-05-11">
       <description translate="no">
         <ul>

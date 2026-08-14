@@ -373,11 +373,7 @@ class AureaWindow(Adw.ApplicationWindow):
         self.screenshot_dark.set_content_fit(
             Gtk.ContentFit.SCALE_DOWN
             if original_width <= 700
-            else (
-                Gtk.ContentFit.COINTAINWN
-                if original_width <= 700
-                else Gtk.ContentFit.CONTAIN
-            )
+            else Gtk.ContentFit.CONTAIN
         )
         if original_width <= 700:
             return image
