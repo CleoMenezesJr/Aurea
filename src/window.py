@@ -29,6 +29,12 @@ from threading import Event, Thread
 from gi.repository import Adw, Gdk, GdkPixbuf, Gio, GLib, Gtk, Soup
 from PIL import Image
 
+logger = logging.getLogger(__name__)
+
+
+class UnsupportedFileError(Exception):
+    """Raised when an unsupported file is provided."""
+
 
 @Gtk.Template(resource_path="/io/github/cleomenezesjr/aurea/gtk/window.ui")
 class AureaWindow(Adw.ApplicationWindow):
@@ -92,14 +98,14 @@ class AureaWindow(Adw.ApplicationWindow):
     ) -> bool | None:
         try:
             if not isinstance(file, Gio.File):
-                raise Exception("Unsupported file")
+                raise TypeError("Unsupported file")
 
             content_type: str = file.query_info(
                 "standard::content-type", 0, None
             ).get_content_type()
 
             if content_type != "application/xml":
-                raise Exception(
+                raise UnsupportedFileError(
                     "Unsupported file type. Must be application/xml"
                 )
 
@@ -110,8 +116,8 @@ class AureaWindow(Adw.ApplicationWindow):
 
             self.setup_monitor_for_file(file)
             self.handle_file_input(path, file_name)
-        except (GLib.Error, Exception):
-            logging.exception("Could not load file contents")
+        except (GLib.Error, UnsupportedFileError, TypeError):
+            logger.exception("Could not load file contents")
             self.toast_overlay.add_toast(
                 Adw.Toast(title=gettext("Can't load appstream"))
             )
@@ -133,7 +139,7 @@ class AureaWindow(Adw.ApplicationWindow):
     ) -> None | GLib.GError:
         try:
             file = dialog.open_finish(result)
-        except Exception as error:
+        except GLib.GError as error:
             return error
 
         def open_file(file) -> Gio.File:
@@ -156,7 +162,7 @@ class AureaWindow(Adw.ApplicationWindow):
             ).get_content_type()
 
             if content_type != "application/xml":
-                raise Exception(
+                raise UnsupportedFileError(
                     "Unsupported file type. Must be application/xml"
                 )
 
@@ -165,17 +171,17 @@ class AureaWindow(Adw.ApplicationWindow):
             if not contents[0]:
                 # self.stack.props.visible_child_name = "welcome_page"
                 # self.get_application().remove_action("reload")
-                raise Exception("File without content")
+                raise UnsupportedFileError("File without content")
 
-        except (GLib.Error, Exception):
-            logging.exception("Could not load file contents")
+        except (GLib.Error, UnsupportedFileError):
+            logger.exception("Could not load file contents")
             self.toast_overlay.add_toast(
                 Adw.Toast(title=gettext("Can't load appstream"))
             )
             self.stack.props.visible_child_name = "welcome_page"
             self.get_application().remove_action("reload")
             self.style_manager.props.color_scheme = Adw.ColorScheme.DEFAULT
-            return None
+            return
 
         path: str = file.peek_path()
         file_name: str = info.get_name()
@@ -285,16 +291,16 @@ class AureaWindow(Adw.ApplicationWindow):
 
         if thread.is_alive():
             stop_event.set()
-            return None
+            return
 
-        return None
+        return
 
     def set_icon(self, icon_path: str) -> None:
         if not icon_path:
             self.toast_overlay.add_toast(
                 Adw.Toast(title=gettext("No icon found"))
             )
-            return None
+            return
 
         try:
             pixbuf: GdkPixbuf.Pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
@@ -304,7 +310,7 @@ class AureaWindow(Adw.ApplicationWindow):
                 preserve_aspect_ratio=True,
             )
         except GLib.Error:
-            logging.exception("Could not load exception")
+            logger.exception("Could not load exception")
         else:
             GLib.idle_add(self.icon.set_from_pixbuf, pixbuf)
             GLib.idle_add(self.icon_dark.set_from_pixbuf, pixbuf)
@@ -312,7 +318,7 @@ class AureaWindow(Adw.ApplicationWindow):
     def set_screenshot_image(self, image_bytes: bytes) -> None:
         self.screenshot.props.visible = bool(image_bytes)
         if not image_bytes:
-            return None
+            return
 
         image: Image.Image = self.crop_screenshot_bottom(image_bytes)
 
@@ -324,14 +330,14 @@ class AureaWindow(Adw.ApplicationWindow):
                 GLib.Bytes(image_array),
             )
         except GLib.Error:
-            logging.exception("Could not read texture from bytes")
+            logger.exception("Could not read texture from bytes")
         else:
             GLib.idle_add(self.screenshot.set_paintable, texture)
             GLib.idle_add(self.screenshot_dark.set_paintable, texture)
 
         self.set_loading_screenshot_state(False)
 
-        return None
+        return
 
     def fetch_screenshot_image_bytes(self, url: str) -> bytes | str:
         session = Soup.Session()
@@ -389,12 +395,10 @@ class AureaWindow(Adw.ApplicationWindow):
         return cropped_image
 
     def set_background_card_color(self, colors: dict) -> str:
-        self.style_provider.load_from_string(
-            f"""
+        self.style_provider.load_from_string(f"""
             .main-card {{ background-color: {colors['light']}; }}
             .main-card-dark {{ background-color: {colors['dark']}; }}
-            """
-        )
+            """)
 
         Gtk.StyleContext.add_provider_for_display(
             Gdk.Display.get_default(),
@@ -454,11 +458,10 @@ class AureaWindow(Adw.ApplicationWindow):
         self.screenshot_stack_dark.props.visible_child_name = (
             "loading_screenshot" if is_loading else "screenshot"
         )
-        return None
 
     def refresh_data(self) -> None:
         if not self.loaded_file:
-            return None
+            return
 
         self.loaded_file.load_contents_async(None, self.open_file_complete)
         self.toast_overlay.add_toast(
@@ -481,6 +484,6 @@ class AureaWindow(Adw.ApplicationWindow):
     ) -> None:
 
         if event != Gio.FileMonitorEvent.MOVED:
-            return None
+            return
 
         self.refresh_data()
