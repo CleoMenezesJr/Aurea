@@ -163,8 +163,8 @@ class AureaWindow(Adw.ApplicationWindow):
             contents: tuple = file.load_contents_finish(result)
 
             if not contents[0]:
-                self.stack.props.visible_child_name = "welcome_page"
-                self.get_application().remove_action("reload")
+                # self.stack.props.visible_child_name = "welcome_page"
+                # self.get_application().remove_action("reload")
                 raise Exception("File without content")
 
         except (GLib.Error, Exception):
@@ -174,6 +174,7 @@ class AureaWindow(Adw.ApplicationWindow):
             )
             self.stack.props.visible_child_name = "welcome_page"
             self.get_application().remove_action("reload")
+            self.style_manager.props.color_scheme = Adw.ColorScheme.DEFAULT
             return None
 
         path: str = file.peek_path()

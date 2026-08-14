@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Aurea
 Comment=A banner previewer for Flatpak metainfo files
+Keywords=banner;brand;color;preview;appstream;appdata;metainfo;
 Exec=aurea
 Icon=io.github.cleomenezesjr.aurea
 Terminal=false
